@@ -6,11 +6,11 @@ module.exports = (grunt) ->
         packages:
           "angular": "",
           "angular-resource": ""
-        store: "lib"
+        store: "src/lib"
       test:
         packages:
           "angular-mocks": ""
-        store: "test/lib"
+        store: "src/test/lib"
 
     connect:
       server:
@@ -18,7 +18,7 @@ module.exports = (grunt) ->
           base: "."
 
     coffeelint:
-      files: ["src/coffee/**/*.coffee", "test/coffee/**/*.coffee"]
+      files: ["src/coffee/**/*.coffee", "src/test/coffee/**/*.coffee"]
       gruntfile: ["Gruntfile.coffee"]
 
     watch:
@@ -29,7 +29,7 @@ module.exports = (grunt) ->
         tasks: ["cofeelint:files"]
 
     clean:
-      files: ["app/js"]
+      files: ["src/app/js"]
 
     coffee:
       src:
@@ -39,39 +39,39 @@ module.exports = (grunt) ->
         flatten: true,
         cwd: "src/coffee",
         src: ["**/*.coffee"],
-        dest: "app/js",
+        dest: "src/app/js",
         ext: ".js"
       test:
         options:
           sourceMap: true
         expand: true,
         flatten: true,
-        cwd: "test/coffee",
+        cwd: "src/test/coffee",
         src: ["**/*.coffee"],
-        dest: "test/js",
+        dest: "src/test/js",
         ext: ".js"
 
     jasmine:
       test:
-        src: "app/js/*.js",
+        src: "src/app/js/*.js",
         options:
-          specs: "test/js/*Spec.js",
+          specs: "src/test/js/*Spec.js",
           helpers: [
-            "test/lib/angular-mocks/angular-mocks.js"
+            "src/test/lib/angular-mocks/angular-mocks.js"
           ],
           vendor: [
-            "test/lib/angular/angular.js"
+            "src/test/lib/angular/angular.js"
           ],
           keepRunner: true
       coverage:
-        src: "app/js/*.js",
+        src: "src/app/js/*.js",
         options:
-          specs: "test/js/*Spec.js",
+          specs: "src/test/js/*Spec.js",
           helpers: [
-            "test/lib/angular-mocks/angular-mocks.js"
+            "src/test/lib/angular-mocks/angular-mocks.js"
           ]
           vendor: [
-            "test/lib/angular/angular.js"
+            "src/test/lib/angular/angular.js"
           ],
           template: require("grunt-template-jasmine-istanbul"),
           templateOptions:
@@ -90,6 +90,9 @@ module.exports = (grunt) ->
 
   grunt.registerTask "server", "Start a web server to host the app.",
     ["connect", "watch"]
+
+  grunt.registerTask "test-with-coverage", "Run Jasmine tests with coverage",
+    ["coffee", "jasmine:coverage"]
 
   grunt.registerTask "test", "Run Jasmine tests",
     ["coffee", "jasmine:test"]
