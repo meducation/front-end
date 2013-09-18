@@ -2,6 +2,11 @@
 
 A collection of single page applications for Meducation.
 
+[![Build Status](https://travis-ci.org/meducation/front-end.png)](https://travis-ci.org/meducation/front-end)
+[![Dependencies](https://gemnasium.com/meducation/front-end.png?travis)](https://gemnasium.com/meducation/front-end)
+[![Code Climate](https://codeclimate.com/github/meducation/front-end.png)](https://codeclimate.com/github/meducation/front-end)
+[![Coverage Status](https://coveralls.io/repos/meducation/front-end/badge.png)](https://coveralls.io/r/meducation/front-end)
+
 ## Installation
 
 Add this line to your application's Gemfile:
