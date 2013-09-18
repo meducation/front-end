@@ -2,6 +2,29 @@
 
 A collection of single page applications for Meducation.
 
+## Installation
+
+Add this line to your application's Gemfile:
+
+    gem 'meducation-front-end'
+
+And then execute:
+
+    $ bundle
+
+Or install it yourself as:
+
+    $ gem install meducation-front-end
+
+## Contributing
+
+1. Fork it
+2. Create your feature branch (`git checkout -b my-new-feature`)
+3. Commit your changes (`git commit -am 'Add some feature'`)
+4. Push to the branch (`git push origin my-new-feature`)
+5. Create new Pull Request
+
+
 ## Licence
 
 Copyright (C) 2013 New Media Education Ltd
