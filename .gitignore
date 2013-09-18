@@ -3,3 +3,5 @@ node_modules
 _SpecRunner.html
 src/lib
 src/test/lib
+.grunt
+tmp
