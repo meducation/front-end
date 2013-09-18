@@ -1,5 +1,5 @@
-require 'meducation_front_end/rails/engine'
-require "meducation_front_end/rails/version"
+require 'meducation_front_end/engine'
+require "meducation_front_end/version"
 
 module MeducationFrontEnd
   module Rails
