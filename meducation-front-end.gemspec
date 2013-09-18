@@ -9,8 +9,8 @@ Gem::Specification.new do |spec|
   spec.authors       = ["Ben Paddock", "Jeremy Walker"]
   spec.email         = ["ben@meducation.net", "jeremy@meducation.net"]
   spec.description   = "Meducation Front End Libraries"
-  spec.summary       = %q{TODO: Write a gem summary}
-  spec.homepage      = ""
+  spec.summary       = "A collection of single page applications for Meducation."
+  spec.homepage      = "http://company.meducation.net"
   spec.license       = "AGPL3"
 
   spec.files         = `git ls-files`.split($/)
