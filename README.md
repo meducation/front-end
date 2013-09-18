@@ -8,15 +8,26 @@ Add this line to your application's Gemfile:
 
     gem 'meducation-front-end'
 
+If you want to use the latest version from Github, you can do:
+
+    gem 'meducation-front-end', github: "meducation/front-end"
+
 And then execute:
 
     $ bundle
 
-Or install it yourself as:
+Place the following in `app/assets/javascripts.js`.
 
-    $ gem install meducation-front-end
+    //= require angular/angular
+    // ... add any other vendor scripts here ...
+    //= require meducation_front_end
+
 
 ## Contributing
+
+Firstly, thank you!! :heart::sparkling_heart::heart:
+
+To help:
 
 1. Fork it
 2. Create your feature branch (`git checkout -b my-new-feature`)
