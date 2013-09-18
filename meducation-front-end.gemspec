@@ -5,7 +5,7 @@ require 'meducation_front_end/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "meducation-front-end"
-  spec.version       = MeducationFrontEnd::VERSION
+  spec.version       = MeducationFrontEnd::Rails::VERSION
   spec.authors       = ["Ben Paddock", "Jeremy Walker"]
   spec.email         = ["ben@meducation.net", "jeremy@meducation.net"]
   spec.description   = "Meducation Front End Libraries"
