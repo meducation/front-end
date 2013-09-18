@@ -1,7 +1,8 @@
 require 'sinatra'
-set :public_folder, Proc.new { File.join(root, "lib") }
+set :public_folder, Proc.new { File.join(root) }
+set :views, Proc.new { File.join(root, "src", "app") }
 
 get '/' do
-  haml :index
+  erb :index
 end
 
