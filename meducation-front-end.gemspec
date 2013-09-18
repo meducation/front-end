@@ -5,13 +5,13 @@ require 'meducation/front/end/version'
 
 Gem::Specification.new do |spec|
   spec.name          = "meducation-front-end"
-  spec.version       = Meducation::Front::End::VERSION
+  spec.version       = FrontEnd::VERSION
   spec.authors       = ["Ben Paddock"]
   spec.email         = ["pads@thisispads.me.uk"]
   spec.description   = %q{TODO: Write a gem description}
   spec.summary       = %q{TODO: Write a gem summary}
   spec.homepage      = ""
-  spec.license       = "MIT"
+  spec.license       = "AGPL3"
 
   spec.files         = `git ls-files`.split($/)
   spec.executables   = spec.files.grep(%r{^bin/}) { |f| File.basename(f) }
