@@ -1,7 +1,9 @@
 pkg
 node_modules
 _SpecRunner.html
-src/lib
-src/test/lib
 .grunt
 tmp
+src/lib
+src/test/lib
+/src/app/js
+/src/test/js
