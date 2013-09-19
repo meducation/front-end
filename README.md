@@ -32,6 +32,18 @@ Place the following in `app/assets/javascripts.js`.
 
 Firstly, thank you!! :heart::sparkling_heart::heart:
 
+Presuming you have npm and ruby install, install everything else with:
+
+```
+npm install -g grunt-cli
+npm install
+grunt
+bundle
+```
+
+To run the JavasScript tests, use `grunt test`.
+To start a local server, use `ruby server.rb`.
+
 To help:
 
 1. Fork it
