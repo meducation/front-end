@@ -2,3 +2,5 @@ language: node_js
 node_js:
   - '0.8'
 before_script: 'npm install grunt-cli bower && grunt bowerful'
+notifications:
+  flowdock: 5cf745cc9e0e8cec50ff50eff72f0193
