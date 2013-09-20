@@ -10,9 +10,10 @@
     "grunt-contrib-coffee": "~0.7.0",
     "grunt-coffeelint": "0.0.7",
     "grunt-contrib-jasmine": "~0.5.2",
-    "grunt-template-jasmine-istanbul": "~0.2.5"
+    "grunt-template-jasmine-istanbul": "~0.2.5",
+    "coveralls": "~2.3.0"
   },
   "scripts": {
-      "test": "grunt coffeelint coffee jasmine:test jasmine:coverage"
+    "test": "grunt coffeelint coffee jasmine:test jasmine:coverage"
   }
 }
