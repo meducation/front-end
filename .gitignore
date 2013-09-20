@@ -5,6 +5,4 @@ _SpecRunner.html
 .coveralls.yml
 tmp
 src/test/lib
-/src/app/js
-/src/test/js
 bower.json
