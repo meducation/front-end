@@ -65,10 +65,10 @@ module.exports = (grunt) ->
         options:
           specs: "tmp/test/js/*Spec.js"
           helpers: [
-            "tmp/test/lib/angular-mocks/angular-mocks.js"
+            "src/test/lib/angular-mocks/angular-mocks.js"
           ]
           vendor: [
-            "tmp/test/lib/angular/angular.js"
+            "src/test/lib/angular/angular.js"
           ]
           keepRunner: true
       coverage:
@@ -76,10 +76,10 @@ module.exports = (grunt) ->
         options:
           specs: "tmp/test/js/*Spec.js"
           helpers: [
-            "tmp/test/lib/angular-mocks/angular-mocks.js"
+            "src/test/lib/angular-mocks/angular-mocks.js"
           ]
           vendor: [
-            "tmp/test/lib/angular/angular.js"
+            "src/test/lib/angular/angular.js"
           ]
           template: require("grunt-template-jasmine-istanbul")
           templateOptions:
