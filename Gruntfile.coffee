@@ -6,7 +6,7 @@ module.exports = (grunt) ->
         packages:
           "angular": ""
           "angular-resource": ""
-        store: "src/lib"
+        store: "vendor/assets/javascripts"
       test:
         packages:
           "angular-mocks": ""
@@ -36,8 +36,7 @@ module.exports = (grunt) ->
 
     clean:
       files: [
-        "src/app/js"
-        "src/test/js"
+        "tmp"
       ]
 
     coffee:
@@ -48,7 +47,7 @@ module.exports = (grunt) ->
         flatten: true,
         cwd: "src/coffee"
         src: ["**/*.coffee"]
-        dest: "src/app/js"
+        dest: "lib/assets/javascripts"
         ext: ".js"
       test:
         options:
@@ -57,30 +56,30 @@ module.exports = (grunt) ->
         flatten: true,
         cwd: "src/test/coffee"
         src: ["**/*.coffee"]
-        dest: "src/test/js"
+        dest: "tmp/test/js"
         ext: ".js"
 
     jasmine:
       test:
-        src: "src/app/js/*.js"
+        src: "lib/assets/javascripts/*.js"
         options:
-          specs: "src/test/js/*Spec.js"
+          specs: "tmp/test/js/*Spec.js"
           helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
+            "tmp/test/lib/angular-mocks/angular-mocks.js"
           ]
           vendor: [
-            "src/test/lib/angular/angular.js"
+            "tmp/test/lib/angular/angular.js"
           ]
           keepRunner: true
       coverage:
-        src: "src/app/js/*.js"
+        src: "lib/assets/javascripts/*.js"
         options:
-          specs: "src/test/js/*Spec.js"
+          specs: "tmp/test/js/*Spec.js"
           helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
+            "tmp/test/lib/angular-mocks/angular-mocks.js"
           ]
           vendor: [
-            "src/test/lib/angular/angular.js"
+            "tmp/test/lib/angular/angular.js"
           ]
           template: require("grunt-template-jasmine-istanbul")
           templateOptions:

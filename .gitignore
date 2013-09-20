@@ -4,7 +4,7 @@ _SpecRunner.html
 .grunt
 .coveralls.yml
 tmp
-src/lib
 src/test/lib
 /src/app/js
 /src/test/js
+bower.json
