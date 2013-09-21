@@ -32,7 +32,7 @@ Place the following in `app/assets/javascripts.js`.
 
 Firstly, thank you!! :heart::sparkling_heart::heart:
 
-Presuming you have npm and ruby install, install everything else with:
+Presuming you have npm and ruby installed, install everything else with:
 
 ```
 npm install -g grunt-cli
