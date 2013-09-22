@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "MeducationFrontEnd.js",
+  "sourceRoot": "../../../src/coffee/",
+  "sources": [
+    "MeducationFrontEnd.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;CAAA,CAAM,IAAM;CAAZ;;CAAA;;CAAA;CAAA"
+}
