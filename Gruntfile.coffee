@@ -94,7 +94,7 @@ module.exports = (grunt) ->
               branches: 80
               functions: 80
 
-  require("matchdep").filterDev("grunt-*").forEach grunt.loadNpmTasks
+  require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
 
   grunt.registerTask "server", "Start a web server to host the app.",
     ["connect", "watch"]
