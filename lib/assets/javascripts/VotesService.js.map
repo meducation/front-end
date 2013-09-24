@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "VotesService.js",
+  "sourceRoot": "../../../src/coffee/service/",
+  "sources": [
+    "VotesService.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;CAAA,KAAA,IAAA;;CAAA,CAAA,CAAa,CAAqC,EAArC,CAAO,GAApB,UAAa;;CAAb,CAEA,CAAmC,EAAA,EAAnC,EAAoC,CAA1B,IAAV;WACE;CAAA,CACQ,CAAA,CAAN,EAAA,GAAO;CACL,WAAA,CAAA;CAAA,EAAW,CAAI,CAAf,GAAA;CAAA,CACU,CAAA,CAAc,CADxB,CACA,EAAA,CAAU,EAAA,GAAA;CACJ,CAAkB,EAAxB,CAAK,CAAmB,GAAA,EAAxB,IAAA;CAJJ,MACQ;CAFyB;CAAnC,EAAmC;CAFnC"
+}
