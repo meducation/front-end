@@ -28,9 +28,12 @@ module.exports = (grunt) ->
       coffee:
         options:
           livereload: true
-        files: []
+        files: [
+          "src/coffee/**/*.coffee"
+          "src/test/coffee/**/*.coffee"
+        ]
         tasks: [
-          "cofeelint:files"
+          "coffeelint:files"
           "test"
         ]
 
@@ -69,6 +72,7 @@ module.exports = (grunt) ->
           ]
           vendor: [
             "src/test/lib/angular/angular.js"
+            "src/test/lib/angular-resource/angular-resource.js"
           ]
           keepRunner: true
       coverage:
@@ -80,6 +84,7 @@ module.exports = (grunt) ->
           ]
           vendor: [
             "src/test/lib/angular/angular.js"
+            "src/test/lib/angular-resource/angular-resource.js"
           ]
           template: require("grunt-template-jasmine-istanbul")
           templateOptions:
