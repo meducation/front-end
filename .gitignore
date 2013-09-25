@@ -6,3 +6,4 @@ _SpecRunner.html
 tmp
 src/test/lib
 bower.json
+*.min.js
