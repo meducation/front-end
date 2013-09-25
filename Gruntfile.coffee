@@ -64,7 +64,10 @@ module.exports = (grunt) ->
 
     jasmine:
       test:
-        src: "lib/assets/javascripts/*.js"
+        src: [
+          "lib/assets/javascripts/meducation_front_end.js"
+          "lib/assets/javascripts/*.js"
+        ]
         options:
           specs: "tmp/test/js/*Spec.js"
           helpers: [
@@ -76,7 +79,10 @@ module.exports = (grunt) ->
           ]
           keepRunner: true
       coverage:
-        src: "lib/assets/javascripts/*.js"
+        src: [
+          "lib/assets/javascripts/meducation_front_end.js"
+          "lib/assets/javascripts/*.js"
+        ]
         options:
           specs: "tmp/test/js/*Spec.js"
           helpers: [
