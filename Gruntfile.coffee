@@ -12,10 +12,11 @@ module.exports = (grunt) ->
           "angular-mocks": ""
         store: "src/test/lib"
 
-    connect:
-      server:
+    express:
+      dev:
         options:
-          base: "."
+          cmd: "coffee"
+          script: "src/app/server.coffee"
 
     coffeelint:
       files: [
@@ -28,11 +29,13 @@ module.exports = (grunt) ->
       coffee:
         options:
           livereload: true
+          nospawn: true
         files: [
           "src/coffee/**/*.coffee"
           "src/test/coffee/**/*.coffee"
         ]
         tasks: [
+          "express:dev"
           "coffeelint:files"
           "test"
         ]
@@ -108,7 +111,7 @@ module.exports = (grunt) ->
   require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
 
   grunt.registerTask "server", "Start a web server to host the app.",
-    ["connect", "watch"]
+    ["express:dev", "watch"]
 
   grunt.registerTask "test-with-coverage", "Run Jasmine tests with coverage",
     ["coffee", "jasmine:coverage"]

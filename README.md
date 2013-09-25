@@ -42,7 +42,7 @@ bundle
 ```
 
 To run the JavasScript tests, use `grunt test`.
-To start a local server, use `ruby server.rb`.
+To start a local server, use `grunt server`.
 
 To help:
 
