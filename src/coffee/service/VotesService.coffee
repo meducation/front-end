@@ -1,4 +1,4 @@
-mainModule = angular.module "meducationFrontEnd", ["ng"]
+mainModule = angular.module "meducationFrontEnd"
 
 mainModule.factory "votesService", ($http) ->
   {
