@@ -1,0 +1,10 @@
+{
+  "version": 3,
+  "file": "VotesController.js",
+  "sourceRoot": "../../../src/coffee/controller/",
+  "sources": [
+    "VotesController.coffee"
+  ],
+  "names": [],
+  "mappings": "AAAA;CAAA,KAAA,IAAA;;CAAA,CAAA,CAAa,GAAA,CAAO,GAApB,UAAa;;CAAb,CACA,CAAyC,GAAA,GAAC,CAAhC,OAAV;CADA"
+}
