@@ -32,26 +32,7 @@ Place the following in `app/assets/javascripts.js`.
 
 Firstly, thank you!! :heart::sparkling_heart::heart:
 
-Presuming you have npm and ruby installed, install everything else with:
-
-```
-npm install -g grunt-cli
-npm install
-grunt
-bundle
-```
-
-To run the JavasScript tests, use `grunt test`.
-To start a local server, use `grunt server`.
-
-To help:
-
-1. Fork it
-2. Create your feature branch (`git checkout -b my-new-feature`)
-3. Commit your changes (`git commit -am 'Add some feature'`)
-4. Push to the branch (`git push origin my-new-feature`)
-5. Create new Pull Request
-
+Please read our [contributing guide](https://github.com/meducation/front-end/tree/master/CONTRIBUTING.md) for information on how to get stuck in.
 
 ## Licence
 
