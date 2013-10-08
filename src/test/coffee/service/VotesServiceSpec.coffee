@@ -14,7 +14,7 @@ describe "Votes Service", () ->
 
   it "should POST with the correct URI for up-voting", ->
     mockHttpBackend.expectPOST("/votes",
-      encodeURI "vote[item_id]=123&vote[item_type]=MediaFile&liked=1")
+      encodeURI "vote[item_id]=123&vote[item_type]=MediaFile&vote[liked]=1")
         .respond 200
 
     service.post { item_id: 123, item_type: "MediaFile", liked: true }
@@ -23,7 +23,7 @@ describe "Votes Service", () ->
 
   it "should POST with the correct URI for down-voting", ->
     mockHttpBackend.expectPOST("/votes",
-      encodeURI "vote[item_id]=456&vote[item_type]=MediaFile&liked=0")
+      encodeURI "vote[item_id]=456&vote[item_type]=MediaFile&vote[liked]=0")
         .respond 200
 
     service.post { item_id: 456, item_type: "MediaFile", liked: false }
