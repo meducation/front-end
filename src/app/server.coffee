@@ -13,9 +13,14 @@ app.use express.bodyParser()
 # to be able to access the lib and vendor folders
 app.use express.static path.join __dirname, '..', '..'
 
+# Set view engine to ejs but allow HTML files to be rendered as is.
+app.set 'views', path.join(__dirname, 'views')
+app.engine 'html', require('ejs').renderFile
+
 app.get '/', (request, response) ->
   response.sendfile path.join 'src', 'app', 'index.html'
 
+app.get '/votes', votes.getVote
 app.post '/votes', votes.postVote
 app.put '/votes/:id', votes.putVote
 app.delete '/votes/:id', votes.deleteVote

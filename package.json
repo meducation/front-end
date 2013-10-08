@@ -17,5 +17,8 @@
   },
   "scripts": {
     "test": "grunt coffeelint coffee jasmine:test jasmine:coverage"
+  },
+  "dependencies": {
+    "ejs": "~0.8.4"
   }
 }

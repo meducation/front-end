@@ -1,3 +1,6 @@
+exports.getVote = (request, response) ->
+  response.render 'votes.html'
+
 exports.postVote = (request, response) ->
   response.json {
     "vote": {
