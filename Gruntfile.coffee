@@ -32,6 +32,7 @@ module.exports = (grunt) ->
           livereload: true
           nospawn: true
         files: [
+          "src/app/**/*.coffee"
           "src/coffee/**/*.coffee"
           "src/test/coffee/**/*.coffee"
         ]
