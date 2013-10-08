@@ -20,6 +20,7 @@ module.exports = (grunt) ->
 
     coffeelint:
       files: [
+        "src/app/**/*.coffee"
         "src/coffee/**/*.coffee"
         "src/test/coffee/**/*.coffee"
       ]
