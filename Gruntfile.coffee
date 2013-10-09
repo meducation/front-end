@@ -1,6 +1,19 @@
 module.exports = (grunt) ->
-  grunt.initConfig
 
+  srcFiles = [
+    "lib/assets/javascripts/meducation_front_end.js"
+    "lib/assets/javascripts/*.js"
+  ]
+  helperFiles = [
+    "src/test/lib/sinonjs/sinon.js"
+    "src/test/lib/angular-mocks/angular-mocks.js"
+  ]
+  vendorFiles = [
+    "src/test/lib/angular/angular.js"
+    "src/test/lib/angular-resource/angular-resource.js"
+  ]
+
+  grunt.initConfig
     bowerful:
       src:
         packages:
@@ -9,6 +22,7 @@ module.exports = (grunt) ->
         store: "vendor/assets/javascripts"
       test:
         packages:
+          "sinonjs": ""
           "angular-mocks": ""
         store: "src/test/lib"
 
@@ -69,34 +83,18 @@ module.exports = (grunt) ->
 
     jasmine:
       test:
-        src: [
-          "lib/assets/javascripts/meducation_front_end.js"
-          "lib/assets/javascripts/*.js"
-        ]
+        src: srcFiles
         options:
           specs: "tmp/test/js/*Spec.js"
-          helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
-          ]
-          vendor: [
-            "src/test/lib/angular/angular.js"
-            "src/test/lib/angular-resource/angular-resource.js"
-          ]
+          helpers: helperFiles
+          vendor: vendorFiles
           keepRunner: true
       coverage:
-        src: [
-          "lib/assets/javascripts/meducation_front_end.js"
-          "lib/assets/javascripts/*.js"
-        ]
+        src: srcFiles
         options:
           specs: "tmp/test/js/*Spec.js"
-          helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
-          ]
-          vendor: [
-            "src/test/lib/angular/angular.js"
-            "src/test/lib/angular-resource/angular-resource.js"
-          ]
+          helpers: helperFiles
+          vendor: vendorFiles
           template: require("grunt-template-jasmine-istanbul")
           templateOptions:
             coverage: "tmp/coverage/coverage.json"
