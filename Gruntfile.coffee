@@ -9,6 +9,7 @@ module.exports = (grunt) ->
     "src/test/lib/angular-mocks/angular-mocks.js"
   ]
   vendorFiles = [
+    "src/test/lib/jquery/jquery.js"
     "src/test/lib/angular/angular.js"
     "src/test/lib/angular-resource/angular-resource.js"
   ]
@@ -22,6 +23,7 @@ module.exports = (grunt) ->
         store: "vendor/assets/javascripts"
       test:
         packages:
+          "jquery": "1.7.2"
           "sinonjs": ""
           "angular-mocks": ""
         store: "src/test/lib"
