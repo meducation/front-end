@@ -31,6 +31,7 @@ module.exports = (grunt) ->
         options:
           cmd: "coffee"
           script: "src/app/server.coffee"
+          port: 8000
 
     coffeelint:
       files: [
