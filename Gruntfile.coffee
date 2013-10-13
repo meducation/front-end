@@ -1,8 +1,8 @@
 module.exports = (grunt) ->
 
   srcFiles = [
-    "lib/assets/javascripts/meducation_front_end.js"
-    "lib/assets/javascripts/*.js"
+    "tmp/js/meducation_front_end.js"
+    "tmp/js/*.js"
   ]
   helperFiles = [
     "src/test/lib/sinonjs/sinon.js"
@@ -65,6 +65,14 @@ module.exports = (grunt) ->
       ]
 
     coffee:
+      production:
+        options:
+          sourceMap: true
+        files:
+          "lib/assets/javascripts/meducation_front_end.js": [
+            "src/coffee/MeducationFrontEnd.coffee"
+            "src/coffee/**/*.coffee"
+          ]
       src:
         options:
           sourceMap: true
@@ -72,7 +80,7 @@ module.exports = (grunt) ->
         flatten: true,
         cwd: "src/coffee"
         src: ["**/*.coffee"]
-        dest: "lib/assets/javascripts"
+        dest: "tmp/js"
         ext: ".js"
       test:
         options:
@@ -123,4 +131,5 @@ module.exports = (grunt) ->
     ["coffee", "jasmine:test"]
 
   grunt.registerTask "default", "Run for first time setup.",
-    ["clean", "bowerful", "coffeelint", "test-with-coverage"]
+    ["clean", "bowerful", "coffeelint", "test-with-coverage",
+     "coffee:production"]
