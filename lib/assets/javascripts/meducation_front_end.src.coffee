@@ -1,8 +1,10 @@
 # The application starting point,
 # add module dependencies to the array as required.
-# Once the app needs config for loading,
-# add a 3rd argument function to carry this out.
-angular.module "meducationFrontEnd", []
+angular.module("meducationFrontEnd", [])
+  .constant('apiScheme', 'http')
+  .constant('apiHostname', 'localhost')
+  .constant('apiPort', 8000)
+
 
 mainModule = angular.module 'meducationFrontEnd'
 
@@ -93,7 +95,8 @@ mainModule.controller 'votesController', ($scope, votesService) ->
       trackVoteAction false, itemType
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.factory 'votesService', ($http) ->
+mainModule.factory 'votesService', ($http, apiScheme, apiHostname, apiPort) ->
+  uri = "#{apiScheme}://#{apiHostname}:#{apiPort}"
   {
     post: (vote) ->
       liked = if vote.liked then 1 else 0
@@ -102,15 +105,15 @@ mainModule.factory 'votesService', ($http) ->
         'vote[item_type]': vote.item_type
         'vote[liked]': liked
       }
-      $http.post '/votes', {}, { params: params }
+      $http.post "#{uri}/votes", {}, { params: params }
 
     put: (vote) ->
       liked = if vote.liked then 1 else 0
       params = {
         'vote[liked]': liked
       }
-      $http.put "/votes/#{vote.vote_id}", {}, { params: params }
+      $http.put "#{uri}/votes/#{vote.vote_id}", {}, { params: params }
 
     delete: (vote) ->
-      $http.delete "/votes/#{vote.vote_id}"
+      $http.delete "#{uri}/votes/#{vote.vote_id}"
   }
