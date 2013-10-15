@@ -16,16 +16,12 @@ module.exports = (grunt) ->
 
   grunt.initConfig
     bowerful:
-      src:
-        packages:
-          "angular": ""
-          "angular-resource": ""
-        store: "vendor/assets/javascripts"
       test:
         packages:
           "jquery": "1.7.2"
           "sinonjs": ""
           "angular-mocks": ""
+          "angular-resource": ""
         store: "src/test/lib"
 
     express:
