@@ -63,6 +63,9 @@ mainModule.controller 'votesController', ($scope, votesService) ->
     promise = votesService.post({
       item_id: itemId, item_type: itemType, liked: true
     })
+
+    animateVoteButton 'up' unless $scope.votedUp
+
     promise.success ->
       if $scope.votedUp
         ratingValue -= 1
@@ -71,7 +74,6 @@ mainModule.controller 'votesController', ($scope, votesService) ->
         if $scope.votedDown then ratingValue +=2 else ratingValue += 1
         $scope.votedUp = true
         $scope.votedDown = false
-        animateVoteButton 'up'
         showFacebookOverlay()
 
       setRatingText()
@@ -81,6 +83,9 @@ mainModule.controller 'votesController', ($scope, votesService) ->
     promise = votesService.post({
       item_id: itemId, item_type: itemType, liked: false
     })
+
+    animateVoteButton 'down' unless $scope.votedDown
+
     promise.success ->
       if $scope.votedDown
         ratingValue += 1
@@ -89,7 +94,6 @@ mainModule.controller 'votesController', ($scope, votesService) ->
         if $scope.votedUp then ratingValue -=2 else ratingValue -= 1
         $scope.votedDown = true
         $scope.votedUp = false
-        animateVoteButton 'down'
 
       setRatingText()
       trackVoteAction false, itemType
