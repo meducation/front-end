@@ -3,9 +3,25 @@
     <head>
         <meta charset="UTF-8">
         <title>Test Meducation Front End</title>
+        <link rel="stylesheet" href="http://localhost:3000/assets/application.css?body=1"/>
     </head>
-    <body data-ng-app="meducationFrontEnd">
-        <h1>Stub</h1>
+    <body id="meducation" data-ng-app="meducationFrontEnd">
+        <div id="main">
+            <div class="content">
+                Votes:
+                <div data-med-voter>I will be replaced by the votes component</div>
+            </div>
+        </div>
+        <script>
+            var mixpanel = {track:function(){}, identify:function(){}, name_tag:function(){}, alias:function(){}, people: {set: function(){}, track_charge: function(){}}};
+        </script>
+        <script src="/src/test/lib/jquery/jquery.js"></script>
+
+        <script src="http://localhost:3000/assets/jquery.tools.js?body=1"></script>
+        <script src="http://localhost:3000/assets/detect-zoom.js?body=1"></script>
+        <script src="http://localhost:3000/assets/meducation.js?body=1"></script>
+        <script src="http://localhost:3000/assets/ui.js?body=1"></script>
+
         <script src="/src/test/lib/angular/angular.js"></script>
         <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
         <script src="/lib/assets/javascripts/meducation_front_end.js"></script>

@@ -9,9 +9,12 @@ app.set 'port', process.env.PORT || 8000
 app.use express.logger 'dev'
 # Allow the app to read JSON from the body in POSTs and PUTs
 app.use express.bodyParser()
-# OS-agnostic way of going up two directories
-# to be able to access the lib and vendor folders
-app.use express.static path.join __dirname, '..', '..'
+# Create paths that mimic the Rails asset pipeline in the form:
+# Pipeline location -> static location
+app.use '/src', express.static path.join __dirname, '..', '..', 'src'
+app.use '/lib', express.static path.join __dirname, '..', '..', 'lib'
+app.use '/assets', express.static path.join __dirname, '..', '..', 'lib',
+  'assets', 'templates'
 
 # Set view engine to ejs but allow HTML files to be rendered as is.
 app.set 'views', path.join(__dirname, 'views')

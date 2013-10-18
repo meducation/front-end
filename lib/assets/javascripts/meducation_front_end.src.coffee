@@ -99,6 +99,14 @@ mainModule.controller 'votesController', ($scope, votesService) ->
       trackVoteAction false, itemType
 mainModule = angular.module 'meducationFrontEnd'
 
+mainModule.directive 'medVoter', () ->
+  {
+    restrict: 'A'
+    templateUrl: '/assets/votes.html'
+    replace: true
+  }
+mainModule = angular.module 'meducationFrontEnd'
+
 mainModule.factory 'votesService', ($http, apiScheme, apiHostname, apiPort) ->
   uri = "#{apiScheme}://#{apiHostname}:#{apiPort}"
   {
