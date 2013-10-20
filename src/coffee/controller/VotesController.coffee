@@ -2,9 +2,9 @@ mainModule = angular.module 'meducationFrontEnd'
 
 mainModule.controller 'votesController', ($scope, votesService) ->
 
-  # TODO: get this from the API in future
-  ratingValue = $('#page_votes').data 'rating'
-  $scope.ratingText = "+#{ratingValue}"
+  #FIX: Initalise this from the scope.
+  # For some reason it cannot be obtained from the directive scope here.
+  ratingValue = 0
 
   # TODO: Move to a template
   overlay = """
@@ -51,9 +51,9 @@ mainModule.controller 'votesController', ($scope, votesService) ->
     $scope.ratingText = if ratingValue >= 0 then "+#{ratingValue}"
     else "#{ratingValue}"
 
-  $scope.upVote = (itemId, itemType) ->
+  $scope.upVote = ->
     promise = votesService.post({
-      item_id: itemId, item_type: itemType, liked: true
+      item_id: $scope.id, item_type: $scope.type, liked: true
     })
 
     animateVoteButton 'up' unless $scope.votedUp
@@ -69,11 +69,11 @@ mainModule.controller 'votesController', ($scope, votesService) ->
         showFacebookOverlay()
 
       setRatingText()
-      trackVoteAction true, itemType
+      trackVoteAction true, $scope.type
 
-  $scope.downVote = (itemId, itemType) ->
+  $scope.downVote = ->
     promise = votesService.post({
-      item_id: itemId, item_type: itemType, liked: false
+      item_id: $scope.id, item_type: $scope.type, liked: false
     })
 
     animateVoteButton 'down' unless $scope.votedDown
@@ -88,4 +88,4 @@ mainModule.controller 'votesController', ($scope, votesService) ->
         $scope.votedUp = false
 
       setRatingText()
-      trackVoteAction false, itemType
+      trackVoteAction false, $scope.type

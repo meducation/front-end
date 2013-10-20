@@ -1,13 +1,10 @@
-<div data-ng-controller="votesController"
-             class="votes votes_media_file_30297 fix_position_on_scroll"
-             data-rating="118" data-votes-class="votes_media_file_30297"
-             id="page_votes">
-    <a href="#" data-ng-click="upVote(30297, 'MediaFile')" class="thumb_up" data-ng-class="{selected: votedUp}"
+<div ng-controller="votesController" class="votes fix_position_on_scroll" id="page_votes">
+    <a href="#" data-ng-click="upVote()" class="thumb_up" data-ng-class="{selected: votedUp}"
        rel="nofollow" title="Vote up">
         <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_up-bb41b1702e5bde05750f0eaf8dcc5855.png">
     </a>
-    <div class="rating" data-ng-bind="ratingText">+0</div>
-    <a href="#" data-ng-click="downVote(30297, 'MediaFile')" class="thumb_down" data-ng-class="{selected: votedDown}"
+    <div class="rating" data-ng-bind="ratingText"></div>
+    <a href="#" data-ng-click="downVote()" class="thumb_down" data-ng-class="{selected: votedDown}"
        rel="nofollow" title="Vote down">
         <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png">
     </a>

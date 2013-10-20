@@ -19,6 +19,8 @@ describe 'Votes Controller', ->
     module 'meducationFrontEnd'
     inject ($rootScope, $controller, votesService, $q) ->
       $scope = $rootScope.$new()
+      $scope.id = 1
+      $scope.type = 'MediaFile'
       # Set the intial score, currently stored in the DOM.
       # It must be set before the controller loads as it reads the DOM
       # on intialisation.
@@ -39,7 +41,8 @@ describe 'Votes Controller', ->
   it 'should be defined', ->
     expect(controller).not.toBeNull()
 
-  it 'should have the score initialised to 0', ->
+  # TODO: Move this to the directive spec
+  xit 'should have the score initialised to 0', ->
     expect($scope.ratingText).toBe '+0'
 
   describe 'Up-voting', ->
@@ -51,7 +54,7 @@ describe 'Votes Controller', ->
       spyOn(promise, 'success').andCallThrough()
       stubbedServicePost.returns promise
 
-      $scope.upVote 1, 'MediaFile'
+      $scope.upVote()
 
     it 'should call the votes service to post an up-vote', ->
       sinon.assert.calledWith stubbedServicePost, {
@@ -109,7 +112,7 @@ describe 'Votes Controller', ->
       spyOn(promise, 'success').andCallThrough()
       stubbedServicePost.returns promise
 
-      $scope.downVote 1, 'MediaFile'
+      $scope.downVote()
 
     it 'should call the votes service to post a down-vote', ->
       sinon.assert.calledWith stubbedServicePost, {
