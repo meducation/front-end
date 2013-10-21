@@ -17,8 +17,9 @@ mainModule.directive 'medVoter', () ->
     controller: ($scope, votesService) ->
       ratingValue = $scope.rating
 
-      # TODO: Move to a template
-      overlay = """
+      # TODO: Move to a template and replace hard-coding
+      overlay = (itemID, itemType) ->
+        """
 <div style="padding:8px;">
   <h3 style="margin-top:0px">Like this on Facebook too.</h3>
   <form accept-charset="UTF-8" action="/my/votes/13176/publish_to_facebook"
@@ -32,13 +33,13 @@ mainModule.directive 'medVoter', () ->
     </div>
     <p>Why not share this with your friends on Facebook as well?</p>
     <a href="/auth/facebook" class="btn facebook_connect_btn"
-      data-redirect-url="http://localhost:3000/my/votes?item%5Bid%5D=29973
-        &amp;item%5Btype%5D=MediaFile&amp;liked=1">Connect To Facebook</a>
+      data-redirect-url="#{location.href}my/votes?item%5Bid%5D=#{itemID}
+&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
     <a class="no_thanks" href="#" style="line-height: 32px;
       vertical-align: middle;margin-left:8px;font-size:12px">No Thanks »</a>
   </form>
 </div>
-  """
+        """
 
       # TODO: Move to directive
       animateVoteButton = (direction) ->
@@ -46,7 +47,7 @@ mainModule.directive 'medVoter', () ->
 
       # TODO: Move to controller
       showFacebookOverlay = ->
-        Meducation.showAlert overlay, 20000
+        Meducation.showAlert overlay($scope.id, $scope.type), 20000
         $('#publish_to_facebook_item_vote_path_form .no_thanks').click ->
           $('.overlay.modal.alert').fadeOut()
           false
