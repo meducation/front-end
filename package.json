@@ -17,7 +17,7 @@
     "grunt-html2js": "~0.1.8"
   },
   "scripts": {
-    "test": "grunt coffeelint coffee jasmine:test jasmine:coverage"
+    "test": "grunt coffeelint compile jasmine:test jasmine:coverage"
   },
   "dependencies": {
     "ejs": "~0.8.4"
