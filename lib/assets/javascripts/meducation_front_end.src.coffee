@@ -8,14 +8,25 @@ angular.module("meducationFrontEnd", [])
 
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.controller 'votesController', ($scope, votesService) ->
+mainModule.directive 'medVoter', () ->
+  {
+    restrict: 'A'
+    templateUrl: '/assets/votes.html'
+    replace: true
+    scope:
+      id: '@medVoterId'
+      type: '@medVoterType'
+      rating: '=medVoterRating'
 
-  #FIX: Initalise this from the scope.
-  # For some reason it cannot be obtained from the directive scope here.
-  ratingValue = 0
+    link: (scope) ->
+      scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
+      else "#{scope.rating}"
 
-  # TODO: Move to a template
-  overlay = """
+    controller: ($scope, votesService) ->
+      ratingValue = $scope.rating
+
+      # TODO: Move to a template
+      overlay = """
 <div style="padding:8px;">
   <h3 style="margin-top:0px">Like this on Facebook too.</h3>
   <form accept-charset="UTF-8" action="/my/votes/13176/publish_to_facebook"
@@ -37,81 +48,66 @@ mainModule.controller 'votesController', ($scope, votesService) ->
 </div>
   """
 
-  # TODO: Move to directive
-  animateVoteButton = (direction) ->
-    Meducation.UI.wiggle($(".thumb_#{direction}").children('img'))
+      # TODO: Move to directive
+      animateVoteButton = (direction) ->
+        Meducation.UI.wiggle($(".thumb_#{direction}").children('img'))
 
-  # TODO: Move to controller
-  showFacebookOverlay = ->
-    Meducation.showAlert overlay, 20000
-    $('#publish_to_facebook_item_vote_path_form .no_thanks').click ->
-      $('.overlay.modal.alert').fadeOut()
-      false
-    $('#publish_to_facebook_item_vote_path_form').bind 'submit', ->
-      Meducation.showAlert 'Done!', 3000
-      $('.overlay.modal.alert').fadeOut()
+      # TODO: Move to controller
+      showFacebookOverlay = ->
+        Meducation.showAlert overlay, 20000
+        $('#publish_to_facebook_item_vote_path_form .no_thanks').click ->
+          $('.overlay.modal.alert').fadeOut()
+          false
+        $('#publish_to_facebook_item_vote_path_form').bind 'submit', ->
+          Meducation.showAlert 'Done!', 3000
+          $('.overlay.modal.alert').fadeOut()
 
-  # TODO: Move to directive
-  trackVoteAction = (liked, type) ->
-    mixpanel.track 'Action: Voted', {liked: liked, type: type}
+      # TODO: Move to directive
+      trackVoteAction = (liked, type) ->
+        mixpanel.track 'Action: Voted', {liked: liked, type: type}
 
-  setRatingText = ->
-    $scope.ratingText = if ratingValue >= 0 then "+#{ratingValue}"
-    else "#{ratingValue}"
+      setRatingText = ->
+        $scope.ratingText = if ratingValue >= 0 then "+#{ratingValue}"
+        else "#{ratingValue}"
 
-  $scope.upVote = ->
-    promise = votesService.post({
-      item_id: $scope.id, item_type: $scope.type, liked: true
-    })
+      $scope.upVote = ->
+        promise = votesService.post({
+          item_id: parseInt($scope.id, 10), item_type: $scope.type, liked: true
+        })
 
-    animateVoteButton 'up' unless $scope.votedUp
+        animateVoteButton 'up' unless $scope.votedUp
 
-    promise.success ->
-      if $scope.votedUp
-        ratingValue -= 1
-        $scope.votedUp = false
-      else
-        if $scope.votedDown then ratingValue +=2 else ratingValue += 1
-        $scope.votedUp = true
-        $scope.votedDown = false
-        showFacebookOverlay()
+        promise.success ->
+          if $scope.votedUp
+            ratingValue -= 1
+            $scope.votedUp = false
+          else
+            if $scope.votedDown then ratingValue +=2 else ratingValue += 1
+            $scope.votedUp = true
+            $scope.votedDown = false
+            showFacebookOverlay()
 
-      setRatingText()
-      trackVoteAction true, $scope.type
+          setRatingText()
+          trackVoteAction true, $scope.type
 
-  $scope.downVote = ->
-    promise = votesService.post({
-      item_id: $scope.id, item_type: $scope.type, liked: false
-    })
+      $scope.downVote = ->
+        promise = votesService.post({
+          item_id: parseInt($scope.id, 10), item_type: $scope.type, liked: false
+        })
 
-    animateVoteButton 'down' unless $scope.votedDown
+        animateVoteButton 'down' unless $scope.votedDown
 
-    promise.success ->
-      if $scope.votedDown
-        ratingValue += 1
-        $scope.votedDown = false
-      else
-        if $scope.votedUp then ratingValue -=2 else ratingValue -= 1
-        $scope.votedDown = true
-        $scope.votedUp = false
+        promise.success ->
+          if $scope.votedDown
+            ratingValue += 1
+            $scope.votedDown = false
+          else
+            if $scope.votedUp then ratingValue -=2 else ratingValue -= 1
+            $scope.votedDown = true
+            $scope.votedUp = false
 
-      setRatingText()
-      trackVoteAction false, $scope.type
-
-mainModule = angular.module 'meducationFrontEnd'
-
-mainModule.directive 'medVoter', () ->
-  {
-    restrict: 'A'
-    templateUrl: '/assets/votes.html'
-    replace: true
-    scope:
-      id: '@medVoterId'
-      type: '@medVoterType'
-      rating: '=medVoterRating'
-    link: (scope) ->
-      scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
-      else "#{scope.rating}"
+          setRatingText()
+          trackVoteAction false, $scope.type
   }
 
 mainModule = angular.module 'meducationFrontEnd'

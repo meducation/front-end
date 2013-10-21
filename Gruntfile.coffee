@@ -1,7 +1,7 @@
 module.exports = (grunt) ->
 
   srcFiles = [
-    "tmp/js/meducation_front_end.js"
+    "tmp/js/MeducationFrontEnd.js"
     "tmp/js/*.js"
   ]
   helperFiles = [
@@ -115,16 +115,27 @@ module.exports = (grunt) ->
               branches: 80
               functions: 80
 
+    html2js:
+      options:
+        module: 'meducationTemplates'
+        base: 'lib/assets'
+      main:
+        src: ['lib/assets/templates/*.html']
+        dest: 'tmp/js/Templates.js'
+
   require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
 
   grunt.registerTask "server", "Start a web server to host the app.",
     ["express:dev", "watch"]
 
+  grunt.registerTask "compile", "Compile CoffeeScript and template files",
+    ["coffee", "html2js"]
+
   grunt.registerTask "test-with-coverage", "Run Jasmine tests with coverage",
-    ["coffee", "jasmine:coverage"]
+    ["compile", "jasmine:coverage"]
 
   grunt.registerTask "test", "Run Jasmine tests",
-    ["coffee", "jasmine:test"]
+    ["compile", "jasmine:test"]
 
   grunt.registerTask "default", "Run for first time setup.",
     ["clean", "bowerful", "coffeelint", "test-with-coverage",

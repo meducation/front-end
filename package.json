@@ -13,7 +13,8 @@
     "grunt-template-jasmine-istanbul": "~0.2.5",
     "coveralls": "~2.3.0",
     "path": "~0.4.9",
-    "express": "~3.4.0"
+    "express": "~3.4.0",
+    "grunt-html2js": "~0.1.8"
   },
   "scripts": {
     "test": "grunt coffeelint coffee jasmine:test jasmine:coverage"
