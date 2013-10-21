@@ -1,11 +1,14 @@
 <div class="votes fix_position_on_scroll" id="page_votes">
-    <a href="#" data-ng-click="upVote()" class="thumb_up" data-ng-class="{selected: votedUp}"
+    <!-- TODO: remove inline styling -->
+    <button style="border: none; padding: 0; background-color: white; outline: none;"
+            data-ng-click="upVote()" class="thumb_up" data-ng-class="{selected: votedUp}"
        rel="nofollow" title="Vote up">
         <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_up-bb41b1702e5bde05750f0eaf8dcc5855.png">
-    </a>
+    </button>
     <div class="rating" data-ng-bind="ratingText"></div>
-    <a href="#" data-ng-click="downVote()" class="thumb_down" data-ng-class="{selected: votedDown}"
+    <button style="border: none; padding: 0; background-color: white; outline: none;"
+            data-ng-click="downVote()" class="thumb_down" data-ng-class="{selected: votedDown}"
        rel="nofollow" title="Vote down">
         <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png">
-    </a>
+    </button>
 </div>
