@@ -4,7 +4,7 @@ http = require 'http'
 votes = require './routes/votes'
 app = express()
 
-app.set 'port', process.env.PORT || 8000
+app.set 'port', process.env.PORT || 5000
 # Log requests to the console
 app.use express.logger 'dev'
 # Allow the app to read JSON from the body in POSTs and PUTs

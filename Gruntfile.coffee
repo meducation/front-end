@@ -29,7 +29,7 @@ module.exports = (grunt) ->
         options:
           cmd: "coffee"
           script: "src/app/server.coffee"
-          port: 8000
+          port: 5000
 
     coffeelint:
       options:
