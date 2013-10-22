@@ -17,10 +17,14 @@ mainModule.directive 'medVoter', () ->
       id: '@medVoterId'
       type: '@medVoterType'
       rating: '=medVoterRating'
+      liked: '=medVoterLiked'
 
     link: (scope) ->
       scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
       else "#{scope.rating}"
+
+      scope.votedUp = scope.liked
+      scope.votedDown = if scope.liked? then !scope.liked
 
     controller: ($scope, votesService) ->
       ratingValue = $scope.rating

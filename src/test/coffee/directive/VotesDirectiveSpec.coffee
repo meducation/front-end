@@ -1,5 +1,7 @@
 describe 'Votes Directive', ->
 
+  compile = null
+  rootScope = null
   directiveScope = null
   stubbedServicePost = null
   promise = null
@@ -15,10 +17,27 @@ describe 'Votes Directive', ->
   window.mixpanel =
     track: ->
 
-  directiveMarkup = '''<div data-med-voter
-                            data-med-voter-id="1"
-                            data-med-voter-type="MediaFile"
-                            data-med-voter-rating="0"/>'''
+  notVotedDirectiveMarkup = '''<div data-med-voter
+                                    data-med-voter-id="1"
+                                    data-med-voter-type="MediaFile"
+                                    data-med-voter-rating="0">'''
+
+  dislikedVoteDirectiveMarkup = '''<div data-med-voter
+                                       data-med-voter-id="1"
+                                       data-med-voter-type="MediaFile"
+                                       data-med-voter-rating="0"
+                                       data-med-voter-liked="false"/>'''
+
+  likedVoteDirectiveMarkup = '''<div data-med-voter
+                                   data-med-voter-id="1"
+                                   data-med-voter-type="MediaFile"
+                                   data-med-voter-rating="0"
+                                   data-med-voter-liked="true"/>'''
+
+  setupDOM = (directiveMarkup) ->
+    element = compile(directiveMarkup)(rootScope)
+    rootScope.$digest()
+    element.scope()
 
   beforeEach ->
 
@@ -26,6 +45,8 @@ describe 'Votes Directive', ->
     # JS form (run 'grunt html2js' then see tmp/js/Templates.js).
     module 'meducationFrontEnd', 'meducationTemplates'
     inject ($compile, $rootScope, votesService, $q, $templateCache) ->
+      compile = $compile
+      rootScope = $rootScope
 
       # The argument in this call to the cache is a key mapped to
       # the HTML string that is the resulting template.
@@ -41,21 +62,19 @@ describe 'Votes Directive', ->
       spyOn window.Meducation, 'showAlert'
       spyOn window.mixpanel, 'track'
 
-      element = $compile(directiveMarkup)($rootScope)
-
-      $rootScope.$digest()
-
-      directiveScope = element.scope()
-
   afterEach ->
     stubbedServicePost.restore()
 
-  it 'should have the score initialised to 0', ->
-    expect(directiveScope.ratingText).toBe '+0'
+  describe 'Initialisation', ->
+
+    it 'should have the score initialised to 0', ->
+      directiveScope = setupDOM notVotedDirectiveMarkup
+      expect(directiveScope.ratingText).toBe '+0'
 
   describe 'Up-voting', ->
 
     beforeEach ->
+      directiveScope = setupDOM notVotedDirectiveMarkup
 
       # Stub the API call to return a vote object
       # We only care about the vote ID for now.
@@ -132,6 +151,8 @@ describe 'Votes Directive', ->
   describe 'Down-voting', ->
 
     beforeEach ->
+      directiveScope = setupDOM notVotedDirectiveMarkup
+
       promise.success = (callback) ->
         vote =
           "vote":
@@ -189,3 +210,23 @@ describe 'Votes Directive', ->
     it 'should track the vote action', ->
       expect(window.mixpanel.track).toHaveBeenCalledWith 'Action: Voted',
       {liked: false, type: 'MediaFile'}
+
+  describe 'Already Liked Item', ->
+
+    beforeEach ->
+      directiveScope = setupDOM likedVoteDirectiveMarkup
+
+    it 'should have votedUp already set to true', ->
+
+      # The view uses votedUp to set the selected class against the button
+      expect(directiveScope.votedUp).toBeTruthy()
+
+  describe 'Already Disliked Item', ->
+
+    beforeEach ->
+      directiveScope = setupDOM dislikedVoteDirectiveMarkup
+
+    it 'should have votedDown already set to true', ->
+
+      # The view uses votedDown to set the selected class against the button
+      expect(directiveScope.votedDown).toBeTruthy()
