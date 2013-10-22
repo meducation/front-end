@@ -32,6 +32,9 @@ module.exports = (grunt) ->
           port: 8000
 
     coffeelint:
+      options:
+        max_line_length:
+          "level": "ignore"
       files: [
         "src/app/**/*.coffee"
         "src/coffee/**/*.coffee"
