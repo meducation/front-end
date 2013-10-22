@@ -56,8 +56,14 @@ describe 'Votes Directive', ->
   describe 'Up-voting', ->
 
     beforeEach ->
+
+      # Stub the API call to return a vote object
+      # We only care about the vote ID for now.
       promise.success = (callback) ->
-        callback()
+        vote =
+          "vote":
+            "id": 2
+        callback(vote)
 
       spyOn(promise, 'success').andCallThrough()
       stubbedServicePost.returns promise
@@ -104,18 +110,33 @@ describe 'Votes Directive', ->
     it 'should animate the button', ->
       expect(window.Meducation.UI.wiggle).toHaveBeenCalled()
 
-    it 'should show the share to Facebook overlay', ->
-      expect(window.Meducation.showAlert).toHaveBeenCalled()
-
     it 'should track the vote action', ->
       expect(window.mixpanel.track).toHaveBeenCalledWith 'Action: Voted',
       {liked: true, type: 'MediaFile'}
+
+    describe 'Facebook Overlay', ->
+
+      it 'should show the share to Facebook overlay', ->
+        expect(window.Meducation.showAlert).toHaveBeenCalled()
+
+      it 'should pass in the item ID and type into the redirect URL', ->
+        overlayTemplate = window.Meducation.showAlert.mostRecentCall.args[0]
+        redirect = '/my/votes?item%5Bid%5D=1&item%5Btype%5D=MediaFile&liked=1'
+        expect(overlayTemplate).toContain redirect
+
+      it 'should pass in the vote ID to the form action', ->
+        overlayTemplate = window.Meducation.showAlert.mostRecentCall.args[0]
+        formAction = 'action="/my/votes/2/publish_to_facebook"'
+        expect(overlayTemplate).toContain formAction
 
   describe 'Down-voting', ->
 
     beforeEach ->
       promise.success = (callback) ->
-        callback()
+        vote =
+          "vote":
+            "id": 3
+        callback(vote)
 
       spyOn(promise, 'success').andCallThrough()
       stubbedServicePost.returns promise

@@ -26,11 +26,11 @@ mainModule.directive 'medVoter', () ->
       ratingValue = $scope.rating
 
       # TODO: Move to a template and replace hard-coding
-      overlay = (itemID, itemType) ->
+      overlay = (itemID, itemType, voteID) ->
         """
 <div style="padding:8px;">
   <h3 style="margin-top:0px">Like this on Facebook too.</h3>
-  <form accept-charset="UTF-8" action="/my/votes/13176/publish_to_facebook"
+  <form accept-charset="UTF-8" action="/my/votes/#{voteID}/publish_to_facebook"
     data-remote="true" id="publish_to_facebook_item_vote_path_form"
     method="post">
     <div style="margin:0;padding:0;display:inline">
@@ -41,8 +41,7 @@ mainModule.directive 'medVoter', () ->
     </div>
     <p>Why not share this with your friends on Facebook as well?</p>
     <a href="/auth/facebook" class="btn facebook_connect_btn"
-      data-redirect-url="#{location.href}my/votes?item%5Bid%5D=#{itemID}
-&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
+      data-redirect-url="#{location.protocol}//#{location.host}/my/votes?item%5Bid%5D=#{itemID}&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
     <a class="no_thanks" href="#" style="line-height: 32px;
       vertical-align: middle;margin-left:8px;font-size:12px">No Thanks »</a>
   </form>
@@ -54,8 +53,8 @@ mainModule.directive 'medVoter', () ->
         Meducation.UI.wiggle($(".thumb_#{direction}").children('img'))
 
       # TODO: Move to controller
-      showFacebookOverlay = ->
-        Meducation.showAlert overlay($scope.id, $scope.type), 20000
+      showFacebookOverlay = (itemID, itemType, voteID) ->
+        Meducation.showAlert overlay(itemID, itemType, voteID), 20000
         $('#publish_to_facebook_item_vote_path_form .no_thanks').click ->
           $('.overlay.modal.alert').fadeOut()
           false
@@ -78,7 +77,7 @@ mainModule.directive 'medVoter', () ->
 
         animateVoteButton 'up' unless $scope.votedUp
 
-        promise.success ->
+        promise.success (data) ->
           if $scope.votedUp
             ratingValue -= 1
             $scope.votedUp = false
@@ -86,7 +85,7 @@ mainModule.directive 'medVoter', () ->
             if $scope.votedDown then ratingValue +=2 else ratingValue += 1
             $scope.votedUp = true
             $scope.votedDown = false
-            showFacebookOverlay()
+            showFacebookOverlay($scope.id, $scope.type, data.vote.id)
 
           setRatingText()
           trackVoteAction true, $scope.type
