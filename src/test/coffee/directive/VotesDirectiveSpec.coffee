@@ -44,16 +44,9 @@ describe 'Votes Directive', ->
     # The meducationTemplates module contains a module for each template in
     # JS form (run 'grunt html2js' then see tmp/js/Templates.js).
     module 'meducationFrontEnd', 'meducationTemplates'
-    inject ($compile, $rootScope, votesService, $q, $templateCache) ->
+    inject ($compile, $rootScope, votesService, $q) ->
       compile = $compile
       rootScope = $rootScope
-
-      # The argument in this call to the cache is a key mapped to
-      # the HTML string that is the resulting template.
-      template = $templateCache.get 'templates/votes.html'
-      # The directive expects the template at this URL so add it as a key
-      # and set the value to be the HTML string.
-      $templateCache.put '/assets/votes.html', template
 
       stubbedServicePost = sinon.stub votesService, 'post'
       promise = $q.defer().promise

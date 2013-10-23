@@ -1,6 +1,7 @@
 module.exports = (grunt) ->
 
   srcFiles = [
+    "tmp/js/MeducationTemplates.js"
     "tmp/js/MeducationFrontEnd.js"
     "tmp/js/*.js"
   ]
@@ -43,10 +44,10 @@ module.exports = (grunt) ->
       gruntfile: ["Gruntfile.coffee"]
 
     watch:
+      options:
+        livereload: true
+        nospawn: true
       coffee:
-        options:
-          livereload: true
-          nospawn: true
         files: [
           "src/app/**/*.coffee"
           "src/coffee/**/*.coffee"
@@ -57,6 +58,9 @@ module.exports = (grunt) ->
           "coffeelint:files"
           "test"
         ]
+      templates:
+        files: ["lib/assets/templates/**/*.html"]
+        tasks: ["test"]
 
     clean:
       files: [
@@ -69,6 +73,7 @@ module.exports = (grunt) ->
           sourceMap: true
         files:
           "lib/assets/javascripts/meducation_front_end.js": [
+            "tmp/coffee/MeducationTemplates.coffee"
             "src/coffee/MeducationFrontEnd.coffee"
             "src/coffee/**/*.coffee"
           ]
@@ -122,9 +127,18 @@ module.exports = (grunt) ->
       options:
         module: 'meducationTemplates'
         base: 'lib/assets'
-      main:
+        # Creates template cache keys which are the URLs the rails asset
+        # pipeline expects i.e.: /assets/templateName.html
+        rename: (moduleName) ->
+          moduleName.replace('templates', '/assets')
+      js:
         src: ['lib/assets/templates/*.html']
-        dest: 'tmp/js/Templates.js'
+        dest: 'tmp/js/MeducationTemplates.js'
+      coffee:
+        options:
+          target: 'coffee'
+        src: ['lib/assets/templates/*.html']
+        dest: 'tmp/coffee/MeducationTemplates.coffee'
 
   require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
 

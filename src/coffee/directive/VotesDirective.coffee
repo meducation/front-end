@@ -1,9 +1,8 @@
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.directive 'medVoter', () ->
+mainModule.directive 'medVoter', ($compile, $templateCache) ->
   {
     restrict: 'A'
-    templateUrl: '/assets/votes.html'
     replace: true
     scope:
       id: '@medVoterId'
@@ -11,7 +10,16 @@ mainModule.directive 'medVoter', () ->
       rating: '=medVoterRating'
       liked: '=medVoterLiked'
 
-    link: (scope) ->
+    link: (scope, element) ->
+
+      templateMap = {
+        "MediaFile": '/assets/pageVote.html'
+        "Item::Comment": '/assets/commentVote.html'
+      }
+
+      element.html($templateCache.get(templateMap[scope.type]))
+      $compile(element.contents())(scope)
+
       scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
       else "#{scope.rating}"
 
@@ -21,7 +29,7 @@ mainModule.directive 'medVoter', () ->
     controller: ($scope, votesService) ->
       ratingValue = $scope.rating
 
-      # TODO: Move to a template and replace hard-coding
+      # TODO: Move to a template
       overlay = (itemID, itemType, voteID) ->
         """
 <div style="padding:8px;">

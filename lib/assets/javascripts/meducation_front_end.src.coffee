@@ -1,6 +1,47 @@
+angular.module('meducationTemplates', ['/assets/commentVote.html', '/assets/pageVote.html'])
+
+angular.module("/assets/commentVote.html", []).run(["$templateCache", ($templateCache) ->
+  $templateCache.put("/assets/commentVote.html",
+    "<div class=\"votes\">\n" +
+    "    <!-- TODO: remove inline styling -->\n" +
+    "    <button style=\"float: left; border: none; margin-top: 4px; padding: 0; background-color: white; outline: none;\"\n" +
+    "            data-ng-click=\"upVote()\" class=\"thumb_up\" data-ng-class=\"{selected: votedUp}\" rel=\"nofollow\"\n" +
+    "        title=\"Vote up\">\n" +
+    "        <img alt=\"\" src=\"https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_up-bb41b1702e5bde05750f0eaf8dcc5855.png\">\n" +
+    "    </button>\n" +
+    "    <div class=\"or\">or</div>\n" +
+    "    <button style=\"float: left; border: none; margin-top: 4px; padding: 0; background-color: white; outline: none;\"\n" +
+    "            data-ng-click=\"downVote()\" class=\"thumb_down\" data-ng-class=\"{selected: votedDown}\" rel=\"nofollow\"\n" +
+    "       title=\"Vote down\">\n" +
+    "        <img alt=\"\" src=\"https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png\">\n" +
+    "    </button>\n" +
+    "    <div class=\"rating\" data-ng-bind=\"ratingText\"></div>\n" +
+    "</div>\n" +
+    "        ")
+])
+
+angular.module("/assets/pageVote.html", []).run(["$templateCache", ($templateCache) ->
+  $templateCache.put("/assets/pageVote.html",
+    "<div class=\"votes fix_position_on_scroll\" id=\"page_votes\">\n" +
+    "    <!-- TODO: remove inline styling -->\n" +
+    "    <button style=\"border: none; padding: 0; background-color: white; outline: none;\"\n" +
+    "            data-ng-click=\"upVote()\" class=\"thumb_up\" data-ng-class=\"{selected: votedUp}\"\n" +
+    "       rel=\"nofollow\" title=\"Vote up\">\n" +
+    "        <img alt=\"\" src=\"https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_up-bb41b1702e5bde05750f0eaf8dcc5855.png\">\n" +
+    "    </button>\n" +
+    "    <div class=\"rating\" data-ng-bind=\"ratingText\"></div>\n" +
+    "    <button style=\"border: none; padding: 0; background-color: white; outline: none;\"\n" +
+    "            data-ng-click=\"downVote()\" class=\"thumb_down\" data-ng-class=\"{selected: votedDown}\"\n" +
+    "       rel=\"nofollow\" title=\"Vote down\">\n" +
+    "        <img alt=\"\" src=\"https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png\">\n" +
+    "    </button>\n" +
+    "</div>\n" +
+    "")
+])
+
 # The application starting point,
 # add module dependencies to the array as required.
-angular.module("meducationFrontEnd", [])
+angular.module('meducationFrontEnd', ['meducationTemplates'])
   .constant('apiScheme', 'http')
   .constant('apiHostname', 'localhost')
   .constant('apiPort', 8000)
@@ -8,10 +49,9 @@ angular.module("meducationFrontEnd", [])
 
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.directive 'medVoter', () ->
+mainModule.directive 'medVoter', ($compile, $templateCache) ->
   {
     restrict: 'A'
-    templateUrl: '/assets/votes.html'
     replace: true
     scope:
       id: '@medVoterId'
@@ -19,7 +59,16 @@ mainModule.directive 'medVoter', () ->
       rating: '=medVoterRating'
       liked: '=medVoterLiked'
 
-    link: (scope) ->
+    link: (scope, element) ->
+
+      templateMap = {
+        "MediaFile": '/assets/pageVote.html'
+        "Item::Comment": '/assets/commentVote.html'
+      }
+
+      element.html($templateCache.get(templateMap[scope.type]))
+      $compile(element.contents())(scope)
+
       scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
       else "#{scope.rating}"
 
@@ -29,7 +78,7 @@ mainModule.directive 'medVoter', () ->
     controller: ($scope, votesService) ->
       ratingValue = $scope.rating
 
-      # TODO: Move to a template and replace hard-coding
+      # TODO: Move to a template
       overlay = (itemID, itemType, voteID) ->
         """
 <div style="padding:8px;">
