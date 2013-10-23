@@ -25,13 +25,13 @@ describe 'Votes Directive', ->
   dislikedVoteDirectiveMarkup = '''<div data-med-voter
                                        data-med-voter-id="1"
                                        data-med-voter-type="MediaFile"
-                                       data-med-voter-rating="0"
+                                       data-med-voter-rating="-1"
                                        data-med-voter-liked="false"/>'''
 
   likedVoteDirectiveMarkup = '''<div data-med-voter
                                    data-med-voter-id="1"
                                    data-med-voter-type="MediaFile"
-                                   data-med-voter-rating="0"
+                                   data-med-voter-rating="1"
                                    data-med-voter-liked="true"/>'''
 
   setupDOM = (directiveMarkup) ->
@@ -207,6 +207,9 @@ describe 'Votes Directive', ->
       thumbImage = window.Meducation.UI.wiggle.mostRecentCall.args[0]
       expect(thumbImage.length).toBe 1
 
+    it 'should apply the negative class to the element', ->
+      expect(directiveScope.negative).toBeTruthy()
+
     it 'should not show the share to Facebook overlay', ->
       expect(window.Meducation.showAlert).not.toHaveBeenCalled()
 
@@ -233,3 +236,19 @@ describe 'Votes Directive', ->
 
       # The view uses votedDown to set the selected class against the button
       expect(directiveScope.votedDown).toBeTruthy()
+
+    it 'should have a negative class applied to the element', ->
+      expect(directiveScope.negative).toBeTruthy()
+
+    it 'should not have a negative class when the rating becomes positive', ->
+      promise.success = (callback) ->
+        vote =
+          "vote":
+            "id": 4
+        callback(vote)
+
+      stubbedServicePost.returns promise
+
+      directiveScope.upVote()
+
+      expect(directiveScope.negative).toBeFalsy()

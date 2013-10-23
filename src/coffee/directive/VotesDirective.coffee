@@ -1,6 +1,10 @@
 mainModule = angular.module 'meducationFrontEnd'
 
 mainModule.directive 'medVoter', ($compile, $templateCache) ->
+
+  checkAndApplyNegativeClass = (scope, rating) ->
+    scope.negative = rating < 0
+
   {
     restrict: 'A'
     replace: true
@@ -25,6 +29,8 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
 
       scope.votedUp = scope.liked
       scope.votedDown = if scope.liked? then !scope.liked
+
+      checkAndApplyNegativeClass(scope, scope.rating)
 
     controller: ($scope, $element, votesService) ->
       ratingValue = $scope.rating
@@ -93,6 +99,7 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
             showFacebookOverlay($scope.id, $scope.type, data.vote.id)
 
           setRatingText()
+          checkAndApplyNegativeClass($scope, ratingValue)
           trackVoteAction true, $scope.type
 
       $scope.downVote = ->
@@ -112,5 +119,6 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
             $scope.votedUp = false
 
           setRatingText()
+          checkAndApplyNegativeClass($scope, ratingValue)
           trackVoteAction false, $scope.type
   }
