@@ -119,8 +119,13 @@ describe 'Votes Directive', ->
 
       expect(directiveScope.ratingText).toBe '-1'
 
-    it 'should animate the button', ->
-      expect(window.Meducation.UI.wiggle).toHaveBeenCalled()
+    it 'should animate the correct button', ->
+      thumbImage = window.Meducation.UI.wiggle.mostRecentCall.args[0]
+      expect(thumbImage.selector).toContain '.thumb_up'
+
+    it 'should animate just the one button', ->
+      thumbImage = window.Meducation.UI.wiggle.mostRecentCall.args[0]
+      expect(thumbImage.length).toBe 1
 
     it 'should track the vote action', ->
       expect(window.mixpanel.track).toHaveBeenCalledWith 'Action: Voted',
@@ -194,8 +199,13 @@ describe 'Votes Directive', ->
 
       expect(directiveScope.ratingText).toBe '+1'
 
-    it 'should animate the button', ->
-      expect(window.Meducation.UI.wiggle).toHaveBeenCalled()
+    it 'should animate the correct button', ->
+      thumbImage = window.Meducation.UI.wiggle.mostRecentCall.args[0]
+      expect(thumbImage.selector).toContain '.thumb_down'
+
+    it 'should animate just the one button', ->
+      thumbImage = window.Meducation.UI.wiggle.mostRecentCall.args[0]
+      expect(thumbImage.length).toBe 1
 
     it 'should not show the share to Facebook overlay', ->
       expect(window.Meducation.showAlert).not.toHaveBeenCalled()

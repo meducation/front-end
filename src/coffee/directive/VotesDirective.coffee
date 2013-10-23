@@ -26,7 +26,7 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
       scope.votedUp = scope.liked
       scope.votedDown = if scope.liked? then !scope.liked
 
-    controller: ($scope, votesService) ->
+    controller: ($scope, $element, votesService) ->
       ratingValue = $scope.rating
 
       # TODO: Move to a template
@@ -54,7 +54,8 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
 
       # TODO: Move to directive
       animateVoteButton = (direction) ->
-        Meducation.UI.wiggle($(".thumb_#{direction}").children('img'))
+        thumbImage = $element.find(".thumb_#{direction}").children 'img'
+        Meducation.UI.wiggle thumbImage
 
       # TODO: Move to controller
       showFacebookOverlay = (itemID, itemType, voteID) ->
