@@ -15,13 +15,12 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
       liked: '=medVoterLiked'
 
     link: (scope, element) ->
+      console.log scope.type
+      template = '/assets/pageVote.html'
+      if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
+        template = '/assets/commentVote.html'
 
-      templateMap = {
-        "MediaFile": '/assets/pageVote.html'
-        "Item::Comment": '/assets/commentVote.html'
-      }
-
-      element.html($templateCache.get(templateMap[scope.type]))
+      element.html $templateCache.get(template)
       $compile(element.contents())(scope)
 
       scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"

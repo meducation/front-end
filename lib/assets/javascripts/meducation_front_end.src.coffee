@@ -21,7 +21,8 @@ angular.module("/assets/commentVote.html", []).run(["$templateCache", ($template
 
 angular.module("/assets/pageVote.html", []).run(["$templateCache", ($templateCache) ->
   $templateCache.put("/assets/pageVote.html",
-    "<div class=\"votes fix_position_on_scroll\" id=\"page_votes\" data-ng-class=\"{negative: negative}\">\n" +
+    "<div class=\"votes\" id=\"page_votes\"\n" +
+    "     data-ng-class=\"{fixed_position_on_scroll: fixed, side_votes: side, negative: negative}\">\n" +
     "    <!-- TODO: remove inline styling -->\n" +
     "    <button style=\"border: none; padding: 0; background-color: white; outline: none;\"\n" +
     "            data-ng-click=\"upVote()\" class=\"thumb_up\" data-ng-class=\"{selected: votedUp}\"\n" +
@@ -35,7 +36,7 @@ angular.module("/assets/pageVote.html", []).run(["$templateCache", ($templateCac
     "        <img alt=\"\" src=\"https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png\">\n" +
     "    </button>\n" +
     "</div>\n" +
-    "")
+    "<!--fix_position_on_scroll or side_votes (question)-->")
 ])
 
 # The application starting point,
@@ -63,14 +64,15 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
       liked: '=medVoterLiked'
 
     link: (scope, element) ->
+      console.log scope.type
+      template = '/assets/pageVote.html'
+      if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
+        template = '/assets/commentVote.html'
 
-      templateMap = {
-        "MediaFile": '/assets/pageVote.html'
-        "Item::Comment": '/assets/commentVote.html'
-      }
-
-      element.html($templateCache.get(templateMap[scope.type]))
+      element.html $templateCache.get(template)
       $compile(element.contents())(scope)
+
+      scope.fixed = true
 
       scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
       else "#{scope.rating}"
