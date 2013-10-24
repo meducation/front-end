@@ -3,11 +3,36 @@
     <head>
         <meta charset="UTF-8">
         <title>Test Meducation Front End</title>
+        <link rel="stylesheet" href="http://localhost:3000/assets/application.css?body=1"/>
     </head>
-    <body>
-        <h1>Stub</h1>
-        <script src="/vendor/assets/javascripts/angular/angular.js"></script>
-        <script src="/vendor/assets/javascripts//angular-resource/angular-resource.js"></script>
-        <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
+    <body id="meducation" data-ng-app="meducationFrontEnd">
+        <div id="main">
+            <div class="content">
+                <div data-med-voter
+                     data-med-voter-id="30297"
+                     data-med-voter-type="MediaFile"
+                     data-med-voter-rating="118"
+                     data-med-voter-liked="true"></div>
+                <div data-med-voter
+                     data-med-voter-id="30298"
+                     data-med-voter-type="Item::Comment"
+                     data-med-voter-rating="-2"
+                     data-med-voter-liked="false"></div>
+            </div>
+        </div>
+        <script>
+            var mixpanel = {track:function(){}, identify:function(){}, name_tag:function(){}, alias:function(){}, people: {set: function(){}, track_charge: function(){}}};
+        </script>
+        <script src="/src/test/lib/jquery/jquery.js"></script>
+
+        <script src="http://localhost:3000/assets/jquery.tools.js?body=1"></script>
+        <script src="http://localhost:3000/assets/detect-zoom.js?body=1"></script>
+        <script src="http://localhost:3000/assets/meducation.js?body=1"></script>
+        <script src="http://localhost:3000/assets/ui.js?body=1"></script>
+
+        <script src="/src/test/lib/angular/angular.js"></script>
+        <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
+        <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
+        <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
     </body>
 </html>

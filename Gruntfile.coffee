@@ -1,15 +1,28 @@
 module.exports = (grunt) ->
-  grunt.initConfig
 
+  srcFiles = [
+    "tmp/js/MeducationTemplates.js"
+    "tmp/js/MeducationFrontEnd.js"
+    "tmp/js/*.js"
+  ]
+  helperFiles = [
+    "src/test/lib/sinonjs/sinon.js"
+    "src/test/lib/angular-mocks/angular-mocks.js"
+  ]
+  vendorFiles = [
+    "src/test/lib/jquery/jquery.js"
+    "src/test/lib/angular/angular.js"
+    "src/test/lib/angular-resource/angular-resource.js"
+  ]
+
+  grunt.initConfig
     bowerful:
-      src:
-        packages:
-          "angular": ""
-          "angular-resource": ""
-        store: "vendor/assets/javascripts"
       test:
         packages:
+          "jquery": "1.7.2"
+          "sinonjs": ""
           "angular-mocks": ""
+          "angular-resource": ""
         store: "src/test/lib"
 
     express:
@@ -17,20 +30,26 @@ module.exports = (grunt) ->
         options:
           cmd: "coffee"
           script: "src/app/server.coffee"
+          port: 5000
 
     coffeelint:
+      options:
+        max_line_length:
+          "level": "ignore"
       files: [
+        "src/app/**/*.coffee"
         "src/coffee/**/*.coffee"
         "src/test/coffee/**/*.coffee"
       ]
       gruntfile: ["Gruntfile.coffee"]
 
     watch:
+      options:
+        livereload: true
+        nospawn: true
       coffee:
-        options:
-          livereload: true
-          nospawn: true
         files: [
+          "src/app/**/*.coffee"
           "src/coffee/**/*.coffee"
           "src/test/coffee/**/*.coffee"
         ]
@@ -39,6 +58,9 @@ module.exports = (grunt) ->
           "coffeelint:files"
           "test"
         ]
+      templates:
+        files: ["lib/assets/templates/**/*.html"]
+        tasks: ["test"]
 
     clean:
       files: [
@@ -46,6 +68,15 @@ module.exports = (grunt) ->
       ]
 
     coffee:
+      production:
+        options:
+          sourceMap: true
+        files:
+          "lib/assets/javascripts/meducation_front_end.js": [
+            "tmp/coffee/MeducationTemplates.coffee"
+            "src/coffee/MeducationFrontEnd.coffee"
+            "src/coffee/**/*.coffee"
+          ]
       src:
         options:
           sourceMap: true
@@ -53,7 +84,7 @@ module.exports = (grunt) ->
         flatten: true,
         cwd: "src/coffee"
         src: ["**/*.coffee"]
-        dest: "lib/assets/javascripts"
+        dest: "tmp/js"
         ext: ".js"
       test:
         options:
@@ -65,30 +96,26 @@ module.exports = (grunt) ->
         dest: "tmp/test/js"
         ext: ".js"
 
+    uglify:
+      production:
+        files:
+          'lib/assets/javascripts/meducation_front_end.min.js':
+            ['lib/assets/javascripts/meducation_front_end.js']
+
     jasmine:
       test:
-        src: "lib/assets/javascripts/*.js"
+        src: srcFiles
         options:
           specs: "tmp/test/js/*Spec.js"
-          helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
-          ]
-          vendor: [
-            "src/test/lib/angular/angular.js"
-            "src/test/lib/angular-resource/angular-resource.js"
-          ]
+          helpers: helperFiles
+          vendor: vendorFiles
           keepRunner: true
       coverage:
-        src: "lib/assets/javascripts/*.js"
+        src: srcFiles
         options:
           specs: "tmp/test/js/*Spec.js"
-          helpers: [
-            "src/test/lib/angular-mocks/angular-mocks.js"
-          ]
-          vendor: [
-            "src/test/lib/angular/angular.js"
-            "src/test/lib/angular-resource/angular-resource.js"
-          ]
+          helpers: helperFiles
+          vendor: vendorFiles
           template: require("grunt-template-jasmine-istanbul")
           templateOptions:
             coverage: "tmp/coverage/coverage.json"
@@ -102,16 +129,37 @@ module.exports = (grunt) ->
               branches: 80
               functions: 80
 
+    html2js:
+      options:
+        module: 'meducationTemplates'
+        base: 'lib/assets'
+        # Creates template cache keys which are the URLs the rails asset
+        # pipeline expects i.e.: /assets/templateName.html
+        rename: (moduleName) ->
+          moduleName.replace('templates', '/assets')
+      js:
+        src: ['lib/assets/templates/*.html']
+        dest: 'tmp/js/MeducationTemplates.js'
+      coffee:
+        options:
+          target: 'coffee'
+        src: ['lib/assets/templates/*.html']
+        dest: 'tmp/coffee/MeducationTemplates.coffee'
+
   require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
 
   grunt.registerTask "server", "Start a web server to host the app.",
     ["express:dev", "watch"]
 
+  grunt.registerTask "compile", "Compile CoffeeScript and template files",
+    ["coffee", "html2js"]
+
   grunt.registerTask "test-with-coverage", "Run Jasmine tests with coverage",
-    ["coffee", "jasmine:coverage"]
+    ["compile", "jasmine:coverage"]
 
   grunt.registerTask "test", "Run Jasmine tests",
-    ["coffee", "jasmine:test"]
+    ["compile", "jasmine:test"]
 
   grunt.registerTask "default", "Run for first time setup.",
-    ["clean", "bowerful", "coffeelint", "test-with-coverage"]
+    ["clean", "bowerful", "coffeelint", "test-with-coverage",
+     "coffee:production", "uglify"]
