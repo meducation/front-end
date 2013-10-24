@@ -23,10 +23,12 @@ app.engine 'html', require('ejs').renderFile
 app.get '/', (request, response) ->
   response.sendfile path.join 'src', 'app', 'index.html'
 
-app.get '/votes', votes.getVote
-app.post '/votes', votes.postVote
-app.put '/votes/:id', votes.putVote
-app.delete '/votes/:id', votes.deleteVote
+uriPrefix = '/api'
+
+app.get "#{uriPrefix}/votes", votes.getVote
+app.post "#{uriPrefix}/votes", votes.postVote
+app.put "#{uriPrefix}votes/:id", votes.putVote
+app.delete "#{uriPrefix}/votes/:id", votes.deleteVote
 
 http.createServer(app).listen app.get('port'), () ->
   console.log 'Server listening on port: ' + app.get 'port'

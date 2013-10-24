@@ -41,9 +41,7 @@ angular.module("/assets/pageVote.html", []).run(["$templateCache", ($templateCac
 # The application starting point,
 # add module dependencies to the array as required.
 angular.module('meducationFrontEnd', ['meducationTemplates'])
-  .constant('apiScheme', 'http')
-  .constant('apiHostname', 'localhost')
-  .constant('apiPort', 8000)
+  .constant('apiURI', '/api')
 
 
 mainModule = angular.module 'meducationFrontEnd'
@@ -189,8 +187,7 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
 
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.factory 'votesService', ($http, apiScheme, apiHostname, apiPort) ->
-  uri = "#{apiScheme}://#{apiHostname}:#{apiPort}"
+mainModule.factory 'votesService', ($http, apiURI) ->
   {
     post: (vote) ->
       liked = if vote.liked then 1 else 0
@@ -199,15 +196,15 @@ mainModule.factory 'votesService', ($http, apiScheme, apiHostname, apiPort) ->
         'vote[item_type]': vote.item_type
         'vote[liked]': liked
       }
-      $http.post "#{uri}/votes", {}, { params: params }
+      $http.post "#{apiURI}/votes", {}, { params: params }
 
     put: (vote) ->
       liked = if vote.liked then 1 else 0
       params = {
         'vote[liked]': liked
       }
-      $http.put "#{uri}/votes/#{vote.vote_id}", {}, { params: params }
+      $http.put "#{apiURI}/votes/#{vote.vote_id}", {}, { params: params }
 
     delete: (vote) ->
-      $http.delete "#{uri}/votes/#{vote.vote_id}"
+      $http.delete "#{apiURI}/votes/#{vote.vote_id}"
   }

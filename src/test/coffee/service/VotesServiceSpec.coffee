@@ -2,7 +2,7 @@ describe 'Votes Service', () ->
 
   service = null
   mockHttpBackend = null
-  apiServerURI = 'http://localhost:8000'
+  apiServerURI = '/api'
 
   beforeEach () ->
     module 'meducationFrontEnd'
