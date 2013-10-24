@@ -22,15 +22,16 @@ describe 'Votes Directive', ->
                                     data-med-voter-type="MediaFile"
                                     data-med-voter-rating="0">'''
 
-  dislikedVoteDirectiveMarkup = '''<div data-med-voter
-                                       data-med-voter-id="1"
-                                       data-med-voter-type="MediaFile"
-                                       data-med-voter-rating="-1"
-                                       data-med-voter-liked="false"/>'''
+  dislikedVoteDirectiveMarkup =
+    '''<div data-med-voter
+            data-med-voter-id="1"
+            data-med-voter-type="KnowledgeBank::Question"
+            data-med-voter-rating="-1"
+            data-med-voter-liked="false"/>'''
 
   likedVoteDirectiveMarkup = '''<div data-med-voter
                                    data-med-voter-id="1"
-                                   data-med-voter-type="MediaFile"
+                                   data-med-voter-type="KnowledgeBank::Answer"
                                    data-med-voter-rating="1"
                                    data-med-voter-liked="true"/>'''
 
@@ -63,6 +64,24 @@ describe 'Votes Directive', ->
     it 'should have the score initialised to 0', ->
       directiveScope = setupDOM notVotedDirectiveMarkup
       expect(directiveScope.ratingText).toBe '+0'
+
+  describe 'Media File Vote', ->
+
+    it 'should have the fixed_positioning_on_scroll class set', ->
+      directiveScope = setupDOM notVotedDirectiveMarkup
+      expect(directiveScope.fixed).toBeTruthy()
+
+  describe 'Knowledge Bank Question Vote', ->
+
+    it 'should not have the fixed_positioning_on_scroll class set', ->
+      directiveScope = setupDOM dislikedVoteDirectiveMarkup
+      expect(directiveScope.fixed).toBeFalsy()
+
+  describe 'Knowledge Bank Answer Vote', ->
+
+    it 'should not have the fixed_positioning_on_scroll class set', ->
+      directiveScope = setupDOM likedVoteDirectiveMarkup
+      expect(directiveScope.fixed).toBeFalsy()
 
   describe 'Up-voting', ->
 

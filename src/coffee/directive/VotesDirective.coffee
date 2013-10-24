@@ -2,8 +2,32 @@ mainModule = angular.module 'meducationFrontEnd'
 
 mainModule.directive 'medVoter', ($compile, $templateCache) ->
 
-  checkAndApplyNegativeClass = (scope, rating) ->
+  determineTemplateToUse = (defaultTemplate, scope) ->
+    template = defaultTemplate
+    if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
+      template = '/assets/commentVote.html'
+    template
+
+  determineFixedPositioning = (template, aDefaultTemplate, scope) ->
+    if template is aDefaultTemplate and
+    scope.type isnt 'KnowledgeBank::Question' and
+    scope.type isnt 'KnowledgeBank::Answer'
+      scope.fixed = true
+
+  loadTemplateFromCacheAndCompile = (element, template, scope) ->
+    element.html $templateCache.get(template)
+    $compile(element.contents())(scope)
+
+  determineNegativeClass = (scope, rating) ->
     scope.negative = rating < 0
+
+  setRating = (scope) ->
+    scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
+    else "#{scope.rating}"
+
+  setVotedState = (scope) ->
+    scope.votedUp = scope.liked
+    scope.votedDown = if scope.liked? then !scope.liked
 
   {
     restrict: 'A'
@@ -15,21 +39,14 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
       liked: '=medVoterLiked'
 
     link: (scope, element) ->
-      console.log scope.type
-      template = '/assets/pageVote.html'
-      if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
-        template = '/assets/commentVote.html'
+      defaultTemplate = '/assets/pageVote.html'
+      template = determineTemplateToUse defaultTemplate, scope
 
-      element.html $templateCache.get(template)
-      $compile(element.contents())(scope)
-
-      scope.ratingText = if scope.rating >= 0 then "+#{scope.rating}"
-      else "#{scope.rating}"
-
-      scope.votedUp = scope.liked
-      scope.votedDown = if scope.liked? then !scope.liked
-
-      checkAndApplyNegativeClass(scope, scope.rating)
+      loadTemplateFromCacheAndCompile element, template, scope
+      determineFixedPositioning template, defaultTemplate, scope
+      setRating scope
+      setVotedState scope
+      determineNegativeClass(scope, scope.rating)
 
     controller: ($scope, $element, votesService) ->
       ratingValue = $scope.rating
@@ -98,7 +115,7 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
             showFacebookOverlay($scope.id, $scope.type, data.vote.id)
 
           setRatingText()
-          checkAndApplyNegativeClass($scope, ratingValue)
+          determineNegativeClass($scope, ratingValue)
           trackVoteAction true, $scope.type
 
       $scope.downVote = ->
@@ -118,6 +135,6 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
             $scope.votedUp = false
 
           setRatingText()
-          checkAndApplyNegativeClass($scope, ratingValue)
+          determineNegativeClass($scope, ratingValue)
           trackVoteAction false, $scope.type
   }
