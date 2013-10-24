@@ -96,6 +96,12 @@ module.exports = (grunt) ->
         dest: "tmp/test/js"
         ext: ".js"
 
+    uglify:
+      production:
+        files:
+          'lib/assets/javascripts/meducation_front_end.min.js':
+            ['lib/assets/javascripts/meducation_front_end.js']
+
     jasmine:
       test:
         src: srcFiles
@@ -156,4 +162,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask "default", "Run for first time setup.",
     ["clean", "bowerful", "coffeelint", "test-with-coverage",
-     "coffee:production"]
+     "coffee:production", "uglify"]

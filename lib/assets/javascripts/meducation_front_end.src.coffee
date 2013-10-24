@@ -46,7 +46,7 @@ angular.module('meducationFrontEnd', ['meducationTemplates'])
 
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.directive 'medVoter', ($compile, $templateCache) ->
+medVoterFunction = ($compile, $templateCache) ->
 
   determineTemplateToUse = (defaultTemplate, scope) ->
     template = defaultTemplate
@@ -76,49 +76,50 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
     scope.votedDown = if scope.liked? then !scope.liked
 
   {
-    restrict: 'A'
-    replace: true
-    scope:
-      id: '@medVoterId'
-      type: '@medVoterType'
-      rating: '=medVoterRating'
-      liked: '=medVoterLiked'
+  restrict: 'A'
+  replace: true
+  scope:
+    id: '@medVoterId'
+    type: '@medVoterType'
+    rating: '=medVoterRating'
+    liked: '=medVoterLiked'
 
-    link: (scope, element) ->
-      defaultTemplate = '/assets/pageVote.html'
-      template = determineTemplateToUse defaultTemplate, scope
+  link: (scope, element) ->
+    defaultTemplate = '/assets/pageVote.html'
+    template = determineTemplateToUse defaultTemplate, scope
 
-      loadTemplateFromCacheAndCompile element, template, scope
-      determineFixedPositioning template, defaultTemplate, scope
-      setRating scope
-      setVotedState scope
-      determineNegativeClass(scope, scope.rating)
+    loadTemplateFromCacheAndCompile element, template, scope
+    determineFixedPositioning template, defaultTemplate, scope
+    setRating scope
+    setVotedState scope
+    determineNegativeClass(scope, scope.rating)
 
-    controller: ($scope, $element, votesService) ->
+  controller: ['$scope', '$element', 'votesService',
+    ($scope, $element, votesService) ->
       ratingValue = $scope.rating
 
       # TODO: Move to a template
       overlay = (itemID, itemType, voteID) ->
         """
-<div style="padding:8px;">
-  <h3 style="margin-top:0px">Like this on Facebook too.</h3>
-  <form accept-charset="UTF-8" action="/my/votes/#{voteID}/publish_to_facebook"
-    data-remote="true" id="publish_to_facebook_item_vote_path_form"
-    method="post">
-    <div style="margin:0;padding:0;display:inline">
-      <input name="utf8" type="hidden" value="&#x2713;"/>
-      <input name="_method" type="hidden" value="put"/>
-      <input name="authenticity_token" type="hidden"
-        value="ywBPFkQ1SLISxEOWOl1cELZCR5dFjk9OYAO3+FWrVuU="/>
-    </div>
-    <p>Why not share this with your friends on Facebook as well?</p>
-    <a href="/auth/facebook" class="btn facebook_connect_btn"
-      data-redirect-url="#{location.protocol}//#{location.host}/my/votes?item%5Bid%5D=#{itemID}&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
-    <a class="no_thanks" href="#" style="line-height: 32px;
-      vertical-align: middle;margin-left:8px;font-size:12px">No Thanks »</a>
-  </form>
-</div>
-        """
+  <div style="padding:8px;">
+    <h3 style="margin-top:0px">Like this on Facebook too.</h3>
+    <form accept-charset="UTF-8" action="/my/votes/#{voteID}/publish_to_facebook"
+      data-remote="true" id="publish_to_facebook_item_vote_path_form"
+      method="post">
+      <div style="margin:0;padding:0;display:inline">
+        <input name="utf8" type="hidden" value="&#x2713;"/>
+        <input name="_method" type="hidden" value="put"/>
+        <input name="authenticity_token" type="hidden"
+          value="ywBPFkQ1SLISxEOWOl1cELZCR5dFjk9OYAO3+FWrVuU="/>
+      </div>
+      <p>Why not share this with your friends on Facebook as well?</p>
+      <a href="/auth/facebook" class="btn facebook_connect_btn"
+        data-redirect-url="#{location.protocol}//#{location.host}/my/votes?item%5Bid%5D=#{itemID}&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
+      <a class="no_thanks" href="#" style="line-height: 32px;
+        vertical-align: middle;margin-left:8px;font-size:12px">No Thanks »</a>
+    </form>
+  </div>
+          """
 
       # TODO: Move to directive
       animateVoteButton = (direction) ->
@@ -183,28 +184,34 @@ mainModule.directive 'medVoter', ($compile, $templateCache) ->
           setRatingText()
           determineNegativeClass($scope, ratingValue)
           trackVoteAction false, $scope.type
+  ]
   }
 
+medVoterFunction.$inject = ['$compile', '$templateCache']
+mainModule.directive 'medVoter', medVoterFunction
 mainModule = angular.module 'meducationFrontEnd'
 
-mainModule.factory 'votesService', ($http, apiURI) ->
+votesServiceFunction = ($http, apiURI) ->
   {
-    post: (vote) ->
-      liked = if vote.liked then 1 else 0
-      params = {
-        'vote[item_id]': vote.item_id
-        'vote[item_type]': vote.item_type
-        'vote[liked]': liked
-      }
-      $http.post "#{apiURI}/votes", {}, { params: params }
+  post: (vote) ->
+    liked = if vote.liked then 1 else 0
+    params = {
+      'vote[item_id]': vote.item_id
+      'vote[item_type]': vote.item_type
+      'vote[liked]': liked
+    }
+    $http.post "#{apiURI}/votes", {}, { params: params }
 
-    put: (vote) ->
-      liked = if vote.liked then 1 else 0
-      params = {
-        'vote[liked]': liked
-      }
-      $http.put "#{apiURI}/votes/#{vote.vote_id}", {}, { params: params }
+  put: (vote) ->
+    liked = if vote.liked then 1 else 0
+    params = {
+      'vote[liked]': liked
+    }
+    $http.put "#{apiURI}/votes/#{vote.vote_id}", {}, { params: params }
 
-    delete: (vote) ->
-      $http.delete "#{apiURI}/votes/#{vote.vote_id}"
+  delete: (vote) ->
+    $http.delete "#{apiURI}/votes/#{vote.vote_id}"
   }
+
+votesServiceFunction.$inject = ['$http', 'apiURI']
+mainModule.factory 'votesService', votesServiceFunction
