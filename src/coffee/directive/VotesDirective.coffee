@@ -123,6 +123,11 @@ medVoterFunction = ($compile, $templateCache) ->
           determineNegativeClass($scope, ratingValue)
           trackVoteAction true, $scope.type
 
+        promise.error (reason, statusCode) ->
+          if statusCode is 403
+            Meducation.showAlert(
+              "Sorry, you need to login or signup to vote. Do it - it's free!")
+
       $scope.downVote = ->
         promise = votesService.post({
           item_id: parseInt($scope.id, 10), item_type: $scope.type, liked: false
@@ -142,6 +147,11 @@ medVoterFunction = ($compile, $templateCache) ->
           setRatingText()
           determineNegativeClass($scope, ratingValue)
           trackVoteAction false, $scope.type
+
+        promise.error (reason, statusCode) ->
+          if statusCode is 403
+            Meducation.showAlert(
+              "Sorry, you need to login or signup to vote. Do it - it's free!")
   ]
   }
 
