@@ -2,10 +2,15 @@ mainModule = angular.module 'meducationFrontEnd'
 
 medVoterFunction = ($compile, $templateCache) ->
 
+  determineElementIDToUse = (scope) ->
+    scope.elementID = 'page_votes' unless scope.type is 'KnowledgeBank::Answer'
+
   determineTemplateToUse = (defaultTemplate, scope) ->
     template = defaultTemplate
     if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
       template = '/assets/commentVote.html'
+    else
+      determineElementIDToUse scope
     template
 
   determineFixedPositioning = (template, aDefaultTemplate, scope) ->
@@ -41,7 +46,6 @@ medVoterFunction = ($compile, $templateCache) ->
   link: (scope, element) ->
     defaultTemplate = '/assets/pageVote.html'
     template = determineTemplateToUse defaultTemplate, scope
-
     loadTemplateFromCacheAndCompile element, template, scope
     determineFixedPositioning template, defaultTemplate, scope
     setRating scope

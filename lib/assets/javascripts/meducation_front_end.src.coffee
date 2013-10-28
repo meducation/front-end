@@ -21,7 +21,7 @@ angular.module("/assets/commentVote.html", []).run(["$templateCache", ($template
 
 angular.module("/assets/pageVote.html", []).run(["$templateCache", ($templateCache) ->
   $templateCache.put("/assets/pageVote.html",
-    "<div class=\"votes\" id=\"page_votes\" data-ng-class=\"{fix_position_on_scroll: fixed, negative: negative}\">\n" +
+    "<div class=\"votes\" id=\"{{elementID}}\" data-ng-class=\"{fix_position_on_scroll: fixed, negative: negative}\">\n" +
     "    <!-- TODO: remove inline styling -->\n" +
     "    <button style=\"border: none; padding: 0; background-color: white; outline: none;\"\n" +
     "            data-ng-click=\"upVote()\" class=\"thumb_up\" data-ng-class=\"{selected: votedUp}\"\n" +
@@ -48,10 +48,15 @@ mainModule = angular.module 'meducationFrontEnd'
 
 medVoterFunction = ($compile, $templateCache) ->
 
+  determineElementIDToUse = (scope) ->
+    scope.elementID = 'page_votes' unless scope.type is 'KnowledgeBank::Answer'
+
   determineTemplateToUse = (defaultTemplate, scope) ->
     template = defaultTemplate
     if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
       template = '/assets/commentVote.html'
+    else
+      determineElementIDToUse scope
     template
 
   determineFixedPositioning = (template, aDefaultTemplate, scope) ->
@@ -87,7 +92,6 @@ medVoterFunction = ($compile, $templateCache) ->
   link: (scope, element) ->
     defaultTemplate = '/assets/pageVote.html'
     template = determineTemplateToUse defaultTemplate, scope
-
     loadTemplateFromCacheAndCompile element, template, scope
     determineFixedPositioning template, defaultTemplate, scope
     setRating scope
