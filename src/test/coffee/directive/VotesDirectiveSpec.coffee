@@ -98,11 +98,66 @@ describe 'Votes Directive', ->
     it 'should not have an ID of page_votes set', ->
       expect(directiveScope.elementID).not.toBe 'page_votes'
 
+  describe 'Not logged-in', ->
+
+    beforeEach ->
+      directiveScope = setupDOM notVotedDirectiveMarkup
+
+      promise.success = ->
+      promise.error = (callback) ->
+        callback 'Forbidden', 403
+
+      spyOn(promise, 'error').andCallThrough()
+      stubbedServicePost.returns promise
+
+    describe 'Up-voting', ->
+
+      it 'should act on the resolved promise when an error has occured', ->
+        directiveScope.upVote()
+
+        expect(promise.error).toHaveBeenCalled()
+
+      it 'should alert asking the user to sign-up', ->
+        directiveScope.upVote()
+
+        expect(Meducation.showAlert).toHaveBeenCalledWith(
+          "Sorry, you need to login or signup to vote. Do it - it's free!")
+
+      it 'should not alert if the error is not a 403', ->
+        promise.error = (callback) ->
+          callback 'Internal server error', 500
+
+        directiveScope.upVote()
+
+        expect(Meducation.showAlert).not.toHaveBeenCalled()
+
+    describe 'Down-voting', ->
+
+      it 'should act on the resolved promise when an error has occured', ->
+        directiveScope.downVote()
+
+        expect(promise.error).toHaveBeenCalled()
+
+      it 'should alert asking the user to sign-up', ->
+        directiveScope.upVote()
+
+        expect(Meducation.showAlert).toHaveBeenCalledWith(
+          "Sorry, you need to login or signup to vote. Do it - it's free!")
+
+      it 'should not alert if the error is not a 403', ->
+        promise.error = (callback) ->
+          callback 'Internal server error', 500
+
+        directiveScope.upVote()
+
+        expect(Meducation.showAlert).not.toHaveBeenCalled()
+
   describe 'Up-voting', ->
 
     beforeEach ->
       directiveScope = setupDOM notVotedDirectiveMarkup
 
+      promise.error = ->
       # Stub the API call to return a vote object
       # We only care about the vote ID for now.
       promise.success = (callback) ->
@@ -185,6 +240,7 @@ describe 'Votes Directive', ->
     beforeEach ->
       directiveScope = setupDOM notVotedDirectiveMarkup
 
+      promise.error = ->
       promise.success = (callback) ->
         vote =
           "vote":
@@ -275,6 +331,7 @@ describe 'Votes Directive', ->
       expect(directiveScope.negative).toBeTruthy()
 
     it 'should not have a negative class when the rating becomes positive', ->
+      promise.error = ->
       promise.success = (callback) ->
         vote =
           "vote":
