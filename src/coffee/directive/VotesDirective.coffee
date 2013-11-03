@@ -13,12 +13,6 @@ medVoterFunction = ($compile, $templateCache) ->
       determineElementIDToUse scope
     template
 
-  determineFixedPositioning = (template, aDefaultTemplate, scope) ->
-    if template is aDefaultTemplate and
-    scope.type isnt 'KnowledgeBank::Question' and
-    scope.type isnt 'KnowledgeBank::Answer'
-      scope.fixed = true
-
   loadTemplateFromCacheAndCompile = (element, template, scope) ->
     element.html $templateCache.get(template)
     $compile(element.contents())(scope)
@@ -47,7 +41,6 @@ medVoterFunction = ($compile, $templateCache) ->
     defaultTemplate = '/assets/pageVote.html'
     template = determineTemplateToUse defaultTemplate, scope
     loadTemplateFromCacheAndCompile element, template, scope
-    determineFixedPositioning template, defaultTemplate, scope
     setRating scope
     setVotedState scope
     determineNegativeClass(scope, scope.rating)
@@ -81,7 +74,7 @@ medVoterFunction = ($compile, $templateCache) ->
 
       # TODO: Move to directive
       animateVoteButton = (direction) ->
-        thumbImage = $element.find(".thumb_#{direction}").children 'img'
+        thumbImage = $element.find(".thumb_#{direction}").children 'i'
         Meducation.UI.wiggle thumbImage
 
       # TODO: Move to controller
