@@ -7,7 +7,7 @@ medVoterFunction = ($compile, $templateCache) ->
 
   determineTemplateToUse = (defaultTemplate, scope) ->
     template = defaultTemplate
-    if scope.type is 'Item::Comment' or scope.type is 'Premium::Tutorial'
+    if scope.type is 'Item::Comment'
       template = '/assets/commentVote.html'
     else
       determineElementIDToUse scope
