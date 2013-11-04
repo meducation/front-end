@@ -70,9 +70,6 @@ describe 'Votes Directive', ->
     beforeEach ->
       directiveScope = setupDOM notVotedDirectiveMarkup
 
-    it 'should have the fixed_positioning_on_scroll class set', ->
-      expect(directiveScope.fixed).toBeTruthy()
-
     it 'should have an ID of page_votes set', ->
       expect(directiveScope.elementID).toBe 'page_votes'
 
@@ -81,9 +78,6 @@ describe 'Votes Directive', ->
     beforeEach ->
       directiveScope = setupDOM dislikedVoteDirectiveMarkup
 
-    it 'should not have the fixed_positioning_on_scroll class set', ->
-      expect(directiveScope.fixed).toBeFalsy()
-
     it 'should have an ID of page_votes set', ->
       expect(directiveScope.elementID).toBe 'page_votes'
 
@@ -91,9 +85,6 @@ describe 'Votes Directive', ->
 
     beforeEach ->
       directiveScope = setupDOM likedVoteDirectiveMarkup
-
-    it 'should not have the fixed_positioning_on_scroll class set', ->
-      expect(directiveScope.fixed).toBeFalsy()
 
     it 'should not have an ID of page_votes set', ->
       expect(directiveScope.elementID).not.toBe 'page_votes'

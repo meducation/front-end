@@ -55,12 +55,11 @@ module.exports = (grunt) ->
         ]
         tasks: [
           "express:dev"
-          "coffeelint:files"
-          "test"
+          "default"
         ]
       templates:
         files: ["lib/assets/templates/**/*.html"]
-        tasks: ["test"]
+        tasks: ["default"]
 
     clean:
       files: [

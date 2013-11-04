@@ -1,15 +1,9 @@
-<div class="votes" data-ng-class="{negative: negative}">
-    <!-- TODO: remove inline styling -->
-    <button style="float: left; border: none; margin-top: 4px; padding: 0; background-color: white; outline: none;"
-            data-ng-click="upVote()" class="thumb_up" data-ng-class="{selected: votedUp}" rel="nofollow"
-        title="Vote up">
-        <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_up-bb41b1702e5bde05750f0eaf8dcc5855.png">
+<div class="votes comment">
+    <div class="rating" data-ng-bind="ratingText" data-ng-class="{negative: negative}"></div>
+    <button class="pure-button thumb_up" data-ng-click="upVote()" data-ng-class="{selected: votedUp}">
+        <i class="fa fa-thumbs-up"></i>
     </button>
-    <div class="or">or</div>
-    <button style="float: left; border: none; margin-top: 4px; padding: 0; background-color: white; outline: none;"
-            data-ng-click="downVote()" class="thumb_down" data-ng-class="{selected: votedDown}" rel="nofollow"
-       title="Vote down">
-        <img alt="" src="https://d20aydchnypyzp.cloudfront.net/assets/i/thumb_down-589c9f572e47e14cd7788ea94b333289.png">
+    <button class="pure-button fa thumb_down" data-ng-click="downVote()" data-ng-class="{selected: votedDown}">
+        <i class="fa fa-thumbs-down"></i>
     </button>
-    <div class="rating" data-ng-bind="ratingText"></div>
 </div>
