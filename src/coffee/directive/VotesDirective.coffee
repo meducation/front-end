@@ -110,7 +110,7 @@ medVoterFunction = ($compile, $templateCache) ->
             if $scope.votedDown then ratingValue +=2 else ratingValue += 1
             $scope.votedUp = true
             $scope.votedDown = false
-            showFacebookOverlay($scope.id, $scope.type, data.vote.id)
+            showFacebookOverlay($scope.id, $scope.type, data.vote.id) unless $scope.type is 'Item::Comment'
 
           setRatingText()
           determineNegativeClass($scope, ratingValue)
