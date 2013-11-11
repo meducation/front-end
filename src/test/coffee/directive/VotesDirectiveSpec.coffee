@@ -22,6 +22,11 @@ describe 'Votes Directive', ->
                                     data-med-voter-type="MediaFile"
                                     data-med-voter-rating="0">'''
 
+  commentVoteDirectiveMarkup = '''<div data-med-voter
+                                data-med-voter-id="1"
+                                data-med-voter-type="Item::Comment"
+                                data-med-voter-rating="0">'''
+
   dislikedVoteDirectiveMarkup =
     '''<div data-med-voter
             data-med-voter-id="1"
@@ -88,6 +93,27 @@ describe 'Votes Directive', ->
 
     it 'should not have an ID of page_votes set', ->
       expect(directiveScope.elementID).not.toBe 'page_votes'
+
+  describe 'Item Comment Vote', ->
+
+    beforeEach ->
+      directiveScope = setupDOM commentVoteDirectiveMarkup
+
+      promise.error = ->
+      promise.success = (callback) ->
+        vote =
+          "vote":
+            "id": 6
+        callback(vote)
+
+      stubbedServicePost.returns promise
+
+      directiveScope.upVote()
+
+    describe 'Facebook Overlay', ->
+
+      it 'should not show the share to Facebook overlay when up-voted', ->
+        expect(window.Meducation.showAlert).not.toHaveBeenCalled()
 
   describe 'Not logged-in', ->
 
