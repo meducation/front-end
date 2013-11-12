@@ -8,5 +8,7 @@ src/test/lib
 bower.json
 *.min.js
 
+Gemfile.lock
+
 lib/assets/javascripts/*.map
 lib/assets/javascripts/*.coffee
