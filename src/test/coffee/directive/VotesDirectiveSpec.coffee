@@ -43,7 +43,7 @@ describe 'Votes Directive', ->
   setupDOM = (directiveMarkup) ->
     element = compile(directiveMarkup)(rootScope)
     rootScope.$digest()
-    element.scope()
+    element.children().scope()
 
   beforeEach ->
 

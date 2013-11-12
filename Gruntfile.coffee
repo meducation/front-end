@@ -21,8 +21,8 @@ module.exports = (grunt) ->
         packages:
           "jquery": "1.7.2"
           "sinonjs": ""
-          "angular-mocks": ""
-          "angular-resource": ""
+          "angular-mocks": "1.2.0"
+          "angular-resource": "1.2.0"
         store: "src/test/lib"
 
     express:
