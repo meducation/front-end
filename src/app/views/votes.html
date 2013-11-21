@@ -1,0 +1,105 @@
+<!doctype html>
+<html lang="en-US">
+<head>
+    <meta charset="UTF-8">
+    <title>Votes Directive</title>
+    <script type="text/javascript" src="//use.typekit.net/lrh2fju.js"></script>
+    <script type="text/javascript">try{Typekit.load();}catch(e){}</script>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css">
+    <link rel="stylesheet" href="http://localhost:3000/assets/application.css?body=1"/>
+    <style>
+        /* Used in Rails controller namespace class */
+        .votes .thumbs {
+            border: 1px solid #5075a3;
+            border-radius: 5px;
+        }
+
+        .votes .thumbs .up {
+            border-right: 1px solid #5075a3;
+        }
+
+        .votes .thumbs button {
+            width: 100%;
+            border-radius: 0;
+            color: #fff;
+            font-size: 48px;
+            font-size: 4.8rem;
+            line-height: 48px;
+            line-height: 4.8rem;
+            padding: 2.1rem;
+            text-align: center;
+            display: block;
+            background: #6594ce;
+        }
+
+        .votes .rating {
+            font-size: 40px;
+            font-size: 4rem;
+            line-height: 40px;
+            line-height: 4rem;
+            margin: 1rem 0 0rem 0;
+            color: #59a80f;
+            font-family: 'museo-sans';
+            font-weight: 500;
+            text-align: center;
+        }
+
+        .votes .thumbs .selected .fa-thumbs-up {
+            color: #59a80f;
+        }
+        .votes .thumbs .fa-thumbs-down {
+            vertical-align: text-top;
+        }
+        .votes .thumbs .selected .fa-thumbs-down {
+            color: red;
+        }
+
+        .votes .rating.negative {
+            color: red;
+        }
+    </style>
+</head>
+<body data-ng-app="meducationFrontEnd">
+<div class="pure-g-r">
+    <div class="pure-u-1-5 pad">
+        <div data-med-voter
+             data-med-voter-id="30297"
+             data-med-voter-type="MediaFile"
+             data-med-voter-rating="118"
+             data-med-voter-liked="true"></div>
+    </div>
+    <div class="pure-u-4-5 pad"></div>
+    <div class="pure-u-1-5 pad" style="position: relative;">
+        <div data-med-voter
+             data-med-voter-id="30298"
+             data-med-voter-type="Item::Comment"
+             data-med-voter-rating="-2"
+             data-med-voter-liked="false"></div>
+    </div>
+    <div class="pure-u-4-5 pad"></div>
+    <div class="pure-u-1-5 pad">
+        <div data-med-voter
+             data-med-voter-id="30299"
+             data-med-voter-type="KnowledgeBank::Answer"
+             data-med-voter-rating="0"></div>
+    </div>
+    <div class="pure-u-4-5 pad">
+    </div>
+</div>
+<script>
+    var mixpanel = {track:function(){}, identify:function(){}, name_tag:function(){}, alias:function(){}, people: {set: function(){}, track_charge: function(){}}};
+</script>
+<script src="/src/test/lib/jquery/jquery.js"></script>
+
+<script src="http://localhost:3000/assets/jquery.tools.js?body=1"></script>
+<script src="http://localhost:3000/assets/detect-zoom.js?body=1"></script>
+<script src="http://localhost:3000/assets/meducation.js?body=1"></script>
+<script src="http://localhost:3000/assets/ui.js?body=1"></script>
+
+<script src="/src/test/lib/angular/angular.js"></script>
+<script src="/src/test/lib/angular-resource/angular-resource.js"></script>
+<!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
+<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
+</body>
+</html>

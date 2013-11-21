@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SyllabusItems Controller</title>
+</head>
+<body data-ng-app="meducationFrontEnd">
+    <div data-ng-controller="syllabusItemsController" data-ng-init="init()">
+        <select data-ng-model="selectedLevel0" data-ng-options="item.name for item in items">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="selectedLevel0" data-ng-model="selectedLevel1" data-ng-options="child.name for child in selectedLevel0.children">
+            <option value="">Select Topic</option>
+        </select>
+    </div>
+    <script src="/src/test/lib/jquery/jquery.js"></script>
+
+    <script src="/src/test/lib/angular/angular.js"></script>
+    <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
+    <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
+</body>
+</html>
