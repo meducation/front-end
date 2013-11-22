@@ -7,9 +7,64 @@ exports.query = (request, response) ->
       "id": 1,
       "name": "Medicine",
       "children": [
-        {"id": 26329, "name": "Anaesthetics"},
+        {
+          "id": 26329,
+          "name": "Anaesthetics",
+          "children": [
+            {"id": 26252, "name": "Analgesia"},
+            {"id": 26310, "name": "Anesthesia"},
+            {"id": 41006, "name": "Conscious Sedation"},
+            {"id": 43422, "name": "Neuromuscular Blockade"},
+            {"id": 50251, "name": "Deep Sedation"}
+          ]
+        },
         {"id": 27442, "name": "Breast"},
-        {"id": 27792, "name": "Cardiology"},
+        {
+          "id": 27792,
+          "name": "Cardiology",
+          "children": [
+            {
+              "id": 27801,
+              "name": "Cardiovascular Diseases",
+              "children": [
+                {"id": 26339, "name": "Angina Pectoris"},
+                {
+                  "id": 26676,
+                  "name": "Cardiac Arrhythmias",
+                  "children": [
+                    {"id": 26809, "name": "Atrial Fibrillation"},
+                    {"id": 26810, "name": "Atrial Flutter"},
+                    {"id": 27421, "name": "Bradycardia"},
+                    {"id": 31654, "name": "Heart Block"},
+                    {"id": 33378, "name": "Long QT Syndrome"},
+                    {"id": 38641, "name": "Tachycardia"},
+                    {"id": 39698, "name": "Ventricular Fibrillation"},
+                    {"id": 49910, "name": "Ventricular Flutter"}
+                  ]
+                },
+                {"id": 30090, "name": "Endocarditis"},
+                {"id": 31660, "name": "Heart Failure"},
+                {"id": 31676, "name": "Heart Valve Diseases"},
+                {"id": 32267, "name": "Hypertension"},
+                {"id": 49877, "name": "Acute Coronary Syndrome"},
+                {"id": 111221, "name": "Pericardial Disease"},
+                {
+                  "id": 111222,
+                  "name": "Disease of Heart Muscle",
+                  "children": [
+                    {"id": 27793, "name": "Alcoholic Cardiomyopathy"},
+                    {"id": 27794, "name": "Dilated Cardiomyopathy"},
+                    {"id": 27795, "name": "Hypertrophic Cardiomyopathy"},
+                    {"id": 27796, "name": "Restrictive Cardiomyopathy"},
+                    {"id": 34403, "name": "Myocarditis"},
+                    {"id": 40364, "name": "Myocardial Reperfusion Injury"}
+                  ]
+                }
+              ]
+            },
+            {"id": 111220, "name": "Cardiovascular Investigations"}
+          ]
+        },
         {"id": 29305, "name": "Dermatology"},
         {"id": 30033, "name": "Emergency Medicine"},
         {"id": 30098, "name": "Endocrinology"},

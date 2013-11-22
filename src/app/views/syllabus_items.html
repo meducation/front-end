@@ -8,7 +8,19 @@
         <select data-ng-model="selectedLevel0" data-ng-options="item.name for item in items">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="selectedLevel0" data-ng-model="selectedLevel1" data-ng-options="child.name for child in selectedLevel0.children">
+        <select data-ng-show="showSelect(selectedLevel0)" data-ng-model="selectedLevel1" data-ng-options="child.name for child in selectedLevel0.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selectedLevel1)" data-ng-model="selectedLevel2" data-ng-options="child.name for child in selectedLevel1.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selectedLevel2)" data-ng-model="selectedLevel3" data-ng-options="child.name for child in selectedLevel2.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selectedLevel3)" data-ng-model="selectedLevel4" data-ng-options="child.name for child in selectedLevel3.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selectedLevel4)" data-ng-model="selectedLevel5" data-ng-options="child.name for child in selectedLevel4.children">
             <option value="">Select Topic</option>
         </select>
     </div>
@@ -16,7 +28,7 @@
 
     <script src="/src/test/lib/angular/angular.js"></script>
     <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
-    <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
-    <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
+    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
 </body>
 </html>
