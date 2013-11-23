@@ -1,5 +1,9 @@
 module.exports = (grunt) ->
 
+  travisJobId = 0 unless process.env.TRAVIS_JOB_ID
+  travisBuildNo = '-1' unless process.env.TRAVIS_BUILD_NUMBER
+  travisBranch = 'local' unless process.env.TRAVIS_BRANCH
+
   srcFiles = [
     'tmp/js/MeducationTemplates.js'
     'tmp/js/MeducationFrontEnd.js'
@@ -140,15 +144,15 @@ module.exports = (grunt) ->
           urls: ['http://127.0.0.1:8000/_SpecRunner.html']
           concurrency: 3
           testname: 'Meducation front-end tests'
-          build: process.env.TRAVIS_JOB_ID
-          tags: [process.env.TRAVIS_BUILD_NUMBER, process.env.TRAVIS_BRANCH]
+          build: travisJobId
+          tags: [travisBuildNo, travisBranch]
           testTimeout: 60000
+          detailedError: true
           browsers: [{
             browserName: 'internet explorer',
             version: '11',
             platform: 'Windows 8.1'
-          },
-          {
+          }, {
             browserName: 'internet explorer',
             version: '10',
             platform: 'Windows 8'
@@ -156,11 +160,10 @@ module.exports = (grunt) ->
             browserName: 'internet explorer',
             version: '9',
             platform: 'Windows 7'
-          }, {
-          }, {
-            browserName: 'internet explorer',
-            version: '8',
-            platform: 'Windows 7'
+#          }, {
+#            browserName: 'internet explorer',
+#            version: '8',
+#            platform: 'Windows 7'
           }, {
             browserName: 'chrome',
             platform: 'Linux',
