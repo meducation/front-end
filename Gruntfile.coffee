@@ -1,8 +1,9 @@
 module.exports = (grunt) ->
 
-  travisJobId = 0 unless process.env.TRAVIS_JOB_ID
-  travisBuildNo = '-1' unless process.env.TRAVIS_BUILD_NUMBER
-  travisBranch = 'local' unless process.env.TRAVIS_BRANCH
+  env = process.env
+  ciJobId = if env.TRAVIS_JOB_ID then env.TRAVIS_JOB_ID else 0
+  ciBuildNo = if env.TRAVIS_BUILD_NUMBER then env.TRAVIS_BUILD_NUMBER else '-1'
+  ciBranch = if env.TRAVIS_BRANCH then env.TRAVIS_BRANCH else 'local'
 
   srcFiles = [
     'tmp/js/MeducationTemplates.js'
@@ -144,8 +145,8 @@ module.exports = (grunt) ->
           urls: ['http://127.0.0.1:8000/_SpecRunner.html']
           concurrency: 3
           testname: 'Meducation front-end tests'
-          build: travisJobId
-          tags: [travisBuildNo, travisBranch]
+          build: ciJobId
+          tags: [ciBuildNo, ciBranch]
           testTimeout: 60000
           detailedError: true
           browsers: [{
