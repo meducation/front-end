@@ -15,10 +15,12 @@
     "path": "~0.4.9",
     "express": "~3.4.0",
     "grunt-html2js": "~0.1.8",
-    "grunt-contrib-uglify": "~0.2.4"
+    "grunt-contrib-uglify": "~0.2.4",
+    "grunt-saucelabs": "~4.1.2",
+    "grunt-contrib-connect": "~0.5.0"
   },
   "scripts": {
-    "test": "grunt coffeelint compile jasmine:test jasmine:coverage"
+    "test": "grunt coffeelint compile saucelabs jasmine:coverage"
   },
   "dependencies": {
     "ejs": "~0.8.4"

@@ -1,47 +1,47 @@
 module.exports = (grunt) ->
 
   srcFiles = [
-    "tmp/js/MeducationTemplates.js"
-    "tmp/js/MeducationFrontEnd.js"
-    "tmp/js/*.js"
+    'tmp/js/MeducationTemplates.js'
+    'tmp/js/MeducationFrontEnd.js'
+    'tmp/js/*.js'
   ]
   helperFiles = [
-    "src/test/lib/sinonjs/sinon.js"
-    "src/test/lib/angular-mocks/angular-mocks.js"
+    'src/test/lib/sinonjs/sinon.js'
+    'src/test/lib/angular-mocks/angular-mocks.js'
   ]
   vendorFiles = [
-    "src/test/lib/jquery/jquery.js"
-    "src/test/lib/angular/angular.js"
-    "src/test/lib/angular-resource/angular-resource.js"
+    'src/test/lib/jquery/jquery.js'
+    'src/test/lib/angular/angular.js'
+    'src/test/lib/angular-resource/angular-resource.js'
   ]
 
   grunt.initConfig
     bowerful:
       test:
         packages:
-          "jquery": "1.7.2"
-          "sinonjs": ""
-          "angular-mocks": "1.2.0"
-          "angular-resource": "1.2.0"
-        store: "src/test/lib"
+          'jquery': '1.7.2'
+          'sinonjs': ''
+          'angular-mocks': '1.2.0'
+          'angular-resource': '1.2.0'
+        store: 'src/test/lib'
 
     express:
       dev:
         options:
-          cmd: "coffee"
-          script: "src/app/server.coffee"
+          cmd: 'coffee'
+          script: 'src/app/server.coffee'
           port: 5000
 
     coffeelint:
       options:
         max_line_length:
-          "level": "ignore"
+          'level': 'ignore'
       files: [
-        "src/app/**/*.coffee"
-        "src/coffee/**/*.coffee"
-        "src/test/coffee/**/*.coffee"
+        'src/app/**/*.coffee'
+        'src/coffee/**/*.coffee'
+        'src/test/coffee/**/*.coffee'
       ]
-      gruntfile: ["Gruntfile.coffee"]
+      gruntfile: ['Gruntfile.coffee']
 
     watch:
       options:
@@ -49,21 +49,21 @@ module.exports = (grunt) ->
         nospawn: true
       coffee:
         files: [
-          "src/app/**/*.coffee"
-          "src/coffee/**/*.coffee"
-          "src/test/coffee/**/*.coffee"
+          'src/app/**/*.coffee'
+          'src/coffee/**/*.coffee'
+          'src/test/coffee/**/*.coffee'
         ]
         tasks: [
-          "express:dev"
-          "default"
+          'express:dev'
+          'default'
         ]
       templates:
-        files: ["lib/assets/templates/**/*.html"]
-        tasks: ["default"]
+        files: ['lib/assets/templates/**/*.html']
+        tasks: ['default']
 
     clean:
       files: [
-        "tmp"
+        'tmp'
       ]
 
     coffee:
@@ -71,29 +71,29 @@ module.exports = (grunt) ->
         options:
           sourceMap: true
         files:
-          "lib/assets/javascripts/meducation_front_end.js": [
-            "tmp/coffee/MeducationTemplates.coffee"
-            "src/coffee/MeducationFrontEnd.coffee"
-            "src/coffee/**/*.coffee"
+          'lib/assets/javascripts/meducation_front_end.js': [
+            'tmp/coffee/MeducationTemplates.coffee'
+            'src/coffee/MeducationFrontEnd.coffee'
+            'src/coffee/**/*.coffee'
           ]
       src:
         options:
           sourceMap: true
         expand: true,
         flatten: true,
-        cwd: "src/coffee"
-        src: ["**/*.coffee"]
-        dest: "tmp/js"
-        ext: ".js"
+        cwd: 'src/coffee'
+        src: ['**/*.coffee']
+        dest: 'tmp/js'
+        ext: '.js'
       test:
         options:
           sourceMap: true
         expand: true,
         flatten: true,
-        cwd: "src/test/coffee"
-        src: ["**/*.coffee"]
-        dest: "tmp/test/js"
-        ext: ".js"
+        cwd: 'src/test/coffee'
+        src: ['**/*.coffee']
+        dest: 'tmp/test/js'
+        ext: '.js'
 
     uglify:
       production:
@@ -105,28 +105,79 @@ module.exports = (grunt) ->
       test:
         src: srcFiles
         options:
-          specs: "tmp/test/js/*Spec.js"
+          specs: 'tmp/test/js/*Spec.js'
           helpers: helperFiles
           vendor: vendorFiles
           keepRunner: true
       coverage:
         src: srcFiles
         options:
-          specs: "tmp/test/js/*Spec.js"
+          specs: 'tmp/test/js/*Spec.js'
           helpers: helperFiles
           vendor: vendorFiles
-          template: require("grunt-template-jasmine-istanbul")
+          keepRunner: true
+          template: require('grunt-template-jasmine-istanbul')
           templateOptions:
-            coverage: "tmp/coverage/coverage.json"
+            coverage: 'tmp/coverage/coverage.json'
             report: [
-              { type: "lcov", options: { dir: "tmp/coverage" } }
-              { type: "text", options: {} }
+              { type: 'lcov', options: { dir: 'tmp/coverage' } }
+              { type: 'text', options: {} }
             ]
             thresholds:
               lines: 80
               statements: 80
               branches: 80
               functions: 80
+
+    connect:
+      server:
+        options: {}
+
+    'saucelabs-jasmine':
+      test:
+        options:
+          username: 'meducation'
+          urls: ['http://127.0.0.1:8000/_SpecRunner.html']
+          concurrency: 3
+          testname: 'Meducation front-end tests'
+          build: process.env.TRAVIS_JOB_ID
+          tags: [process.env.TRAVIS_BUILD_NUMBER, process.env.TRAVIS_BRANCH]
+          testTimeout: 60000
+          browsers: [{
+            browserName: 'internet explorer',
+            version: '11',
+            platform: 'Windows 8.1'
+          },
+          {
+            browserName: 'internet explorer',
+            version: '10',
+            platform: 'Windows 8'
+          }, {
+            browserName: 'internet explorer',
+            version: '9',
+            platform: 'Windows 7'
+          }, {
+          }, {
+            browserName: 'internet explorer',
+            version: '8',
+            platform: 'Windows 7'
+          }, {
+            browserName: 'chrome',
+            platform: 'Linux',
+            version: '30'
+          }, {
+            browserName: 'firefox',
+            platform: 'Linux',
+            version: '25'
+          }, {
+            browserName: 'safari',
+            platform: 'OS X 10.8',
+            version: '6'
+          }, {
+            browserName: 'opera',
+            version: '12',
+            platform: 'Linux'
+          }]
 
     html2js:
       options:
@@ -145,20 +196,23 @@ module.exports = (grunt) ->
         src: ['lib/assets/templates/*.html']
         dest: 'tmp/coffee/MeducationTemplates.coffee'
 
-  require("matchdep").filterDev("grunt-!(template)*").forEach grunt.loadNpmTasks
+  require('matchdep').filterDev('grunt-!(template)*').forEach grunt.loadNpmTasks
 
-  grunt.registerTask "server", "Start a web server to host the app.",
-    ["express:dev", "watch"]
+  grunt.registerTask 'server', 'Start a web server to host the app.',
+    ['express:dev', 'watch']
 
-  grunt.registerTask "compile", "Compile CoffeeScript and template files",
-    ["coffee", "html2js"]
+  grunt.registerTask 'compile', 'Compile CoffeeScript and template files',
+    ['coffee', 'html2js']
 
-  grunt.registerTask "test-with-coverage", "Run Jasmine tests with coverage",
-    ["compile", "jasmine:coverage"]
+  grunt.registerTask 'test-with-coverage', 'Run Jasmine tests with coverage',
+    ['compile', 'jasmine:coverage']
 
-  grunt.registerTask "test", "Run Jasmine tests",
-    ["compile", "jasmine:test"]
+  grunt.registerTask 'test', 'Run Jasmine tests',
+    ['compile', 'jasmine:test']
 
-  grunt.registerTask "default", "Run for first time setup.",
-    ["clean", "bowerful", "coffeelint", "test-with-coverage",
-     "coffee:production", "uglify"]
+  grunt.registerTask 'saucelabs', 'Run tests in real browsers via Saucelabs',
+    ['connect', 'test', 'saucelabs-jasmine']
+
+  grunt.registerTask 'default', 'Run for first time setup.',
+    ['clean', 'bowerful', 'coffeelint', 'test-with-coverage',
+     'coffee:production', 'uglify']

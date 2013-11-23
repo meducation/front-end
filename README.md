@@ -7,6 +7,8 @@ A collection of single page applications for Meducation.
 [![Code Climate](https://codeclimate.com/github/meducation/front-end.png)](https://codeclimate.com/github/meducation/front-end)
 [![Coverage Status](https://coveralls.io/repos/meducation/front-end/badge.png)](https://coveralls.io/r/meducation/front-end)
 
+[![Saucelabs Test Status](https://saucelabs.com/browser-matrix/meducation.svg)](https://saucelabs.com/u/meducation)
+
 ## Installation
 
 Add this line to your application's Gemfile:
