@@ -1,6 +1,5 @@
 pkg
 node_modules
-_SpecRunner.html
 .grunt
 .coveralls.yml
 tmp
