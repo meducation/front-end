@@ -2,7 +2,7 @@ mainModule = angular.module 'meducationFrontEnd'
 
 syllabusItemsControllerFunction = ($scope, syllabusItemsService) ->
 
-  levels = [0 ,1, 2, 3, 4]
+  levels = [0..4]
 
   $scope.init = ->
     $scope.items = syllabusItemsService.query()
