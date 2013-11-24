@@ -52,19 +52,19 @@ describe 'Syllabus Items Controller', ->
 
   describe 'showing select elements', ->
     it 'should not show a select if the preceeding select not been chosen', ->
-      expect($scope.showSelect($scope.selectLevel0)).toBeFalsy()
+      expect($scope.showSelect($scope.selected0)).toBeFalsy()
 
     it 'should not show a select if the preceeding select has no children', ->
-      $scope.selectLevel1 = {
+      $scope.selected1 = {
         "id": 3,
         "name": "Analgesia"
         "children": []
       }
 
-      expect($scope.showSelect($scope.selectLevel1)).toBeFalsy()
+      expect($scope.showSelect($scope.selected1)).toBeFalsy()
 
     it 'should show a select if the preceeding select has no children', ->
-      $scope.selectLevel2 = {
+      $scope.selected2 = {
         "id": 4,
         "name": "Cardiovascular Diseases"
         "children": [
@@ -76,4 +76,32 @@ describe 'Syllabus Items Controller', ->
         ]
       }
 
-      expect($scope.showSelect($scope.selectLevel2)).toBeTruthy()
+      expect($scope.showSelect($scope.selected2)).toBeTruthy()
+
+  describe 'Populating the mesh heading identifiers hidden input field', ->
+    it 'should set the value correctly for one selected topic', ->
+      $scope.selected0 = {"id": 6 }
+
+      $scope.updateMeshHeadingIds()
+
+      expect($scope.meshHeadingIds).toBe '6'
+
+    it 'should set the value correctly for multiple topics', ->
+      $scope.selected0 = {"id": 6 }
+      $scope.selected1 = {"id": 7 }
+      $scope.selected2 = {"id": 8 }
+      $scope.selected3 = {"id": 9 }
+      $scope.selected4 = {"id": 10 }
+
+      $scope.updateMeshHeadingIds()
+
+      expect($scope.meshHeadingIds).toBe '6,7,8,9,10'
+
+    it 'should handle a reverted selection', ->
+      $scope.selected0 = {"id": 6 }
+      $scope.selected1 = {"id": 7 }
+      $scope.selected2 = { 'Select Topic' }
+
+      $scope.updateMeshHeadingIds()
+
+      expect($scope.meshHeadingIds).toBe '6,7'

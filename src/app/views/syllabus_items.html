@@ -5,24 +5,25 @@
 </head>
 <body data-ng-app="meducationFrontEnd">
     <div data-ng-controller="syllabusItemsController" data-ng-init="init()">
-        <select data-ng-model="selectedLevel0" data-ng-options="item.name for item in items">
+        <select data-ng-model="selected0" data-ng-change="updateMeshHeadingIds()" data-ng-options="item.name for item in items">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="showSelect(selectedLevel0)" data-ng-model="selectedLevel1" data-ng-options="child.name for child in selectedLevel0.children">
+        <select data-ng-show="showSelect(selected0)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected1" data-ng-options="child.name for child in selected0.children">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="showSelect(selectedLevel1)" data-ng-model="selectedLevel2" data-ng-options="child.name for child in selectedLevel1.children">
+        <select data-ng-show="showSelect(selected1)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected2" data-ng-options="child.name for child in selected1.children">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="showSelect(selectedLevel2)" data-ng-model="selectedLevel3" data-ng-options="child.name for child in selectedLevel2.children">
+        <select data-ng-show="showSelect(selected2)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected3" data-ng-options="child.name for child in selected2.children">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="showSelect(selectedLevel3)" data-ng-model="selectedLevel4" data-ng-options="child.name for child in selectedLevel3.children">
+        <select data-ng-show="showSelect(selected3)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected4" data-ng-options="child.name for child in selected3.children">
             <option value="">Select Topic</option>
         </select>
-        <select data-ng-show="showSelect(selectedLevel4)" data-ng-model="selectedLevel5" data-ng-options="child.name for child in selectedLevel4.children">
+        <select data-ng-show="showSelect(selected4)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected5" data-ng-options="child.name for child in selected4.children">
             <option value="">Select Topic</option>
         </select>
+        <input type="hidden" name="media_file[mesh_heading_ids]" value="{{meshHeadingIds}}"/>
     </div>
     <script src="/src/test/lib/jquery/jquery.js"></script>
 
