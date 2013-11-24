@@ -2,8 +2,6 @@ mainModule = angular.module 'meducationFrontEnd'
 
 syllabusItemsControllerFunction = ($scope, syllabusItemsService) ->
 
-  levels = [0..4]
-
   $scope.init = ->
     $scope.items = syllabusItemsService.query()
 
@@ -12,9 +10,10 @@ syllabusItemsControllerFunction = ($scope, syllabusItemsService) ->
 
   $scope.updateMeshHeadingIds = ->
     $scope.meshHeadingIds = []
-    for level in levels
-      if $scope["selected#{level}"]?.id
-        $scope.meshHeadingIds.push $scope["selected#{level}"].id
+    level = 0
+    while $scope["selected#{level}"]?.id
+      $scope.meshHeadingIds.push $scope["selected#{level}"].id
+      level += 1
 
     $scope.meshHeadingIds = $scope.meshHeadingIds.join ','
 

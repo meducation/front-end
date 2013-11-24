@@ -3,7 +3,6 @@ describe 'Syllabus Items Controller', ->
   controller = null
   $scope = null
   mockSyllabusItemsService = null
-  promise = null
 
   beforeEach ->
     module 'meducationFrontEnd'
@@ -13,7 +12,6 @@ describe 'Syllabus Items Controller', ->
       controller = $controller 'syllabusItemsController', { $scope: $scope }
 
       mockSyllabusItemsService = sinon.mock syllabusItemsService
-      promise = $q.defer().promise
 
   afterEach ->
     mockSyllabusItemsService.restore()
