@@ -2,6 +2,7 @@ express = require 'express'
 path = require 'path'
 http = require 'http'
 votes = require './routes/votes'
+syllabusItems = require './routes/syllabus_items'
 app = express()
 
 app.set 'port', process.env.PORT || 5000
@@ -23,12 +24,17 @@ app.engine 'html', require('ejs').renderFile
 app.get '/', (request, response) ->
   response.sendfile path.join 'src', 'app', 'index.html'
 
-uriPrefix = '/api'
+# Example pages hosting individual UI components.
+app.get "/votes", votes.getVote
+app.get "/syllabus_items", syllabusItems.getSyllabusItems
 
-app.get "#{uriPrefix}/votes", votes.getVote
+# API calls returning stubbed responses.
+uriPrefix = '/api'
 app.post "#{uriPrefix}/votes", votes.postVote
 app.put "#{uriPrefix}votes/:id", votes.putVote
 app.delete "#{uriPrefix}/votes/:id", votes.deleteVote
+
+app.get "#{uriPrefix}/syllabus_items", syllabusItems.query
 
 http.createServer(app).listen app.get('port'), () ->
   console.log 'Server listening on port: ' + app.get 'port'

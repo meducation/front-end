@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>SyllabusItems Controller</title>
+</head>
+<body data-ng-app="meducationFrontEnd">
+    <div data-ng-controller="syllabusItemsController" data-ng-init="init()">
+        <select data-ng-model="selected0" data-ng-change="updateMeshHeadingIds()" data-ng-options="item.name for item in items">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selected0)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected1" data-ng-options="child.name for child in selected0.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selected1)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected2" data-ng-options="child.name for child in selected1.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selected2)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected3" data-ng-options="child.name for child in selected2.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selected3)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected4" data-ng-options="child.name for child in selected3.children">
+            <option value="">Select Topic</option>
+        </select>
+        <select data-ng-show="showSelect(selected4)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected5" data-ng-options="child.name for child in selected4.children">
+            <option value="">Select Topic</option>
+        </select>
+        <input type="hidden" name="media_file[mesh_heading_ids]" value="{{meshHeadingIds}}"/>
+    </div>
+    <script src="/src/test/lib/jquery/jquery.js"></script>
+
+    <script src="/src/test/lib/angular/angular.js"></script>
+    <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
+    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
+</body>
+</html>
