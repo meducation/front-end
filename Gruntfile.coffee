@@ -18,6 +18,7 @@ module.exports = (grunt) ->
     'src/test/lib/jquery/jquery.js'
     'src/test/lib/angular/angular.js'
     'src/test/lib/angular-resource/angular-resource.js'
+    'vendor/assets/javascripts/jquery.fileupload-angular.js'
   ]
 
   grunt.initConfig
@@ -25,6 +26,7 @@ module.exports = (grunt) ->
       test:
         packages:
           'jquery': '1.7.2'
+          'blueimp-file-upload': '9.4.1'
           'sinonjs': ''
           'angular-mocks': '1.2.0'
           'angular-resource': '1.2.0'

@@ -3,6 +3,7 @@ path = require 'path'
 http = require 'http'
 votes = require './routes/votes'
 syllabusItems = require './routes/syllabus_items'
+uploadForm = require './routes/upload_form'
 app = express()
 
 app.set 'port', process.env.PORT || 5000
@@ -17,6 +18,8 @@ app.use '/lib', express.static path.join __dirname, '..', '..', 'lib'
 app.use '/assets', express.static path.join __dirname, '..', '..', 'lib',
   'assets', 'templates'
 
+app.use '/vendor', express.static path.join __dirname, '..', '..', 'vendor'
+
 # Set view engine to ejs but allow HTML files to be rendered as is.
 app.set 'views', path.join(__dirname, 'views')
 app.engine 'html', require('ejs').renderFile
@@ -27,6 +30,7 @@ app.get '/', (request, response) ->
 # Example pages hosting individual UI components.
 app.get "/votes", votes.getVote
 app.get "/syllabus_items", syllabusItems.getSyllabusItems
+app.get "/upload_form", uploadForm.getUploadForm
 
 # API calls returning stubbed responses.
 uriPrefix = '/api'
@@ -35,6 +39,9 @@ app.put "#{uriPrefix}votes/:id", votes.putVote
 app.delete "#{uriPrefix}/votes/:id", votes.deleteVote
 
 app.get "#{uriPrefix}/syllabus_items", syllabusItems.query
+
+app.post '/media_files', uploadForm.postForm
+app.post '/s3_upload', uploadForm.uploadToS3
 
 http.createServer(app).listen app.get('port'), () ->
   console.log 'Server listening on port: ' + app.get 'port'
