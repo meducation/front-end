@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="lib/assets/stylesheets/meducation_front_end.css"/>
 </head>
 <body data-ng-app="meducationFrontEnd">
-    <form data-ng-controller="mediaFileUploadController" data-ng-init="init('https://s3-eu-west-1.amazon.aws.com/my-bucket')" data-file-upload="options"
+    <form data-ng-controller="mediaFileUploadController" data-file-upload="options"
           action="/s3_upload" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data" id="fe-file_upload_form">
         <fieldset>
             <legend>Contribute to Meducation</legend>
@@ -29,21 +29,21 @@
             </div>
         </fieldset>
     </form>
-    <form class="pure-form pure-form-stacked" accept-charset="UTF-8" action="/media_files" enctype="multipart/form-data" id="new_media_file" method="post">
+    <form class="pure-form pure-form-stacked" data-ng-controller="mediaFileFormController"
+          accept-charset="UTF-8" action="/media_files" enctype="multipart/form-data" id="new_media_file" method="post">
         <input type="hidden" name="media_file[external_file_url]" id="media_file_external_file_url" value="{{ externalFileUrl }}"/>
         <fieldset>
             <div class="pure-control-group">
                 <label for="media_file_title">
                     <h2>Title</h2>
                 </label>
-                <input id="media_file_title" name="media_file_title[title]" type="text" placeholder="Resource title" required />
+                <input id="media_file_title" name="media_file[title]" type="text" placeholder="Resource title" required />
             </div>
             <div class="pure-control-group">
                 <label for="media_file_description">
                     <h2>Description</h2>
                 </label>
-                <textarea id="media_file_description" name="media_file[description]" placeholder="Please describe your resource here" cols="40" rows="20">
-                </textarea>
+                <textarea id="media_file_description" name="media_file[description]" placeholder="Please describe your resource here" cols="40" rows="20"></textarea>
             </div>
             <div class="pure-control-group" data-ng-controller="syllabusItemsController" data-ng-init="init()">
                 <label for="media_file_mesh_heading_ids">

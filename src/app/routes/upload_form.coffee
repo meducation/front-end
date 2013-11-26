@@ -2,6 +2,7 @@ exports.getUploadForm = (request, response) ->
   response.render 'upload_form.html'
 
 exports.postForm = (request, response) ->
+  console.log request.body.media_file
   response.send 201, 'Created'
 
 exports.uploadToS3  = (request, response) ->

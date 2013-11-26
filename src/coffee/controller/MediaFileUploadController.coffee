@@ -1,11 +1,6 @@
 mainModule = angular.module 'meducationFrontEnd'
 
-mediaFileUploadControllerFunction = ($scope) ->
-
-  $scope.isFormSubmissionDisabled = true
-
-  $scope.init = (externalServerUrl) ->
-    $scope.externalServerUrl = externalServerUrl
+mediaFileUploadControllerFunction = ($rootScope, $scope) ->
 
   $scope.options = {
     dataType: 'xml'
@@ -14,13 +9,10 @@ mediaFileUploadControllerFunction = ($scope) ->
 
   $scope.$on 'fileuploadprogressall', (event, data) ->
     #TODO: Update UI progress bar
-    console.log 'progress'
 
   $scope.$on 'fileuploaddone', (event, data) ->
-    relativeFileUrl = $(data.result).find('Key').text()
-    # TODO: emit these so that the other form controller can act on them
-    $scope.externalFileUrl = "{$scope.externalServerUrl}/#{relativeFileUrl}"
-    $scope.isFormSubmissionDisabled = false
+    externalFileUrl = $(data.result).find('Location').text()
+    $rootScope.$emit 'externalfileurlchange', externalFileUrl
 
-mediaFileUploadControllerFunction.$inject = ['$scope']
+mediaFileUploadControllerFunction.$inject = ['$rootScope', '$scope']
 mainModule.controller 'mediaFileUploadController', mediaFileUploadControllerFunction
