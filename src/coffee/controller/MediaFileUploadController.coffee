@@ -8,11 +8,16 @@ mediaFileUploadControllerFunction = ($rootScope, $scope) ->
   }
 
   $scope.$on 'fileuploadprogressall', (event, data) ->
-    #TODO: Update UI progress bar
+    $scope.progressWidth = parseInt data.loaded/data.total*100, 10
 
   $scope.$on 'fileuploaddone', (event, data) ->
-    externalFileUrl = $(data.result).find('Location').text()
+    externalFileUrl = decodeURIComponent $(data.result).find('Location').text()
+    $scope.fileName = externalFileUrl.split('/').pop()
+
     $rootScope.$emit 'externalfileurlchange', externalFileUrl
 
+    $scope.progressWidth = 0
+
 mediaFileUploadControllerFunction.$inject = ['$rootScope', '$scope']
-mainModule.controller 'mediaFileUploadController', mediaFileUploadControllerFunction
+mainModule.controller 'mediaFileUploadController',
+  mediaFileUploadControllerFunction

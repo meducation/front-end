@@ -5,10 +5,12 @@
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
     <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
     <link rel="stylesheet" href="lib/assets/stylesheets/meducation_front_end.css"/>
+    <link rel="stylesheet" href="lib/assets/stylesheets/file_upload_form.css"/>
+    <link rel="stylesheet" href="lib/assets/stylesheets/syllabus_items_selector.css"/>
 </head>
 <body data-ng-app="meducationFrontEnd">
     <form data-ng-controller="mediaFileUploadController" data-file-upload="options"
-          action="/s3_upload" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data" id="fe-file_upload_form">
+          action="/s3_upload" id="fe-file_upload_form" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data" id="fe-file_upload_form">
         <fieldset>
             <legend>Contribute to Meducation</legend>
             <p>Contribute to our community and build your reputation by uploading a resource to Meducation.</p>
@@ -16,6 +18,8 @@
                 <label for="file">
                     <h2>Select your File</h2>
                     <p>You can upload videos, podcasts, PowerPoints, PDFs, documents or any other media that you have created.</p>
+                    <p>Once a file has been selected it will be automatically uploaded to our servers to begin processing.</p>
+                    <p>If your resource is a large file, it might take a while to upload and process.</p>
                 </label>
                 <input type="hidden" name="key" value="uploads/${filename}"/>
                 <input type="hidden" name="AWSAccessKeyId" value="MYACCESSKEY"/>
@@ -23,9 +27,17 @@
                 <input type="hidden" name="policy" value="MYPOLICY"/>
                 <input type="hidden" name="signature" value="MYSIGNATURE"/>
                 <input type="hidden" name="success_action_status" value="201"/>
-                <input id="file" type="file" name="file" />
-                <div class="progress"></div>
-                <div class="bar" style="width: 0; height: 20px; background: green;"></div>
+                <div class="upload_section">
+                    <span class="pure-button action file_upload_button">
+                        <li class="fa fa-cloud-upload"></li>
+                        <span>Select File to Upload</span>
+                        <input id="file" type="file" name="file"/>
+                    </span>
+                    <span class="upload_result" data-ng-show="fileName">Thank you! <span class="filename">{{fileName}}</span> has been uploaded for processing.</span>
+                </div>
+                <div class="progress">
+                    <div class="bar" data-ng-style="{width: progressWidth + '%'}"></div>
+                </div>
             </div>
         </fieldset>
     </form>
@@ -43,9 +55,11 @@
                 <label for="media_file_description">
                     <h2>Description</h2>
                 </label>
-                <textarea id="media_file_description" name="media_file[description]" placeholder="Please describe your resource here" cols="40" rows="20"></textarea>
+                <div class="markdown_textarea">
+                    <textarea id="media_file_description" name="media_file[description]" placeholder="Please describe your resource here" cols="130" rows="20" class="markdown"></textarea>
+                </div>
             </div>
-            <div class="pure-control-group" data-ng-controller="syllabusItemsController" data-ng-init="init()">
+            <div id="fe-syllabus_items_selector" class="pure-control-group" data-ng-controller="syllabusItemsController" data-ng-init="init()">
                 <label for="media_file_mesh_heading_ids">
                     <h2>Categorise</h2>
                     <p>Select topics that are relevant to this resource.</p>
@@ -74,10 +88,9 @@
                 <label for="media_file_availability_id" class="pure-checkbox">
                     <input id="media_file_availability_id" name="media_file[availability_id]" type="checkbox"> Restrict this file to only groups you select. NOT recommended
                 </label>
-                <p>If your resource is a large file, it might take a while to upload. Once the file is uploaded, it will be processed by our media server and become live on Meducation shortly.</p>
                 <button id="upload_submit" name="commit" type="submit" class="pure-button pure-button-primary" data-ng-disabled="isFormSubmissionDisabled">
-                    <li class="fa fa-cloud-upload"></li>
                     Upload your Resource
+                    <li class="fa fa-arrow-right"></li>
                 </button>
             </div>
         </fieldset>
@@ -94,7 +107,7 @@
 
     <script src="/vendor/assets/javascripts/jquery.fileupload-angular.js"></script>
 
-    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
-    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
+    <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
 </body>
 </html>
