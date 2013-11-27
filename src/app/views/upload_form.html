@@ -21,7 +21,7 @@
                     <p>Once a file has been selected it will be automatically uploaded to our servers to begin processing.</p>
                     <p>If your resource is a large file, it might take a while to upload and process.</p>
                 </label>
-                <input type="hidden" name="key" value="uploads/${filename}"/>
+                <input id="s3_key" type="hidden" name="key" value="uploads/${filename}" />
                 <input type="hidden" name="AWSAccessKeyId" value="MYACCESSKEY"/>
                 <input type="hidden" name="acl" value="private"/>
                 <input type="hidden" name="policy" value="MYPOLICY"/>
@@ -107,7 +107,7 @@
 
     <script src="/vendor/assets/javascripts/jquery.fileupload-angular.js"></script>
 
-    <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
-    <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
+    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
 </body>
 </html>

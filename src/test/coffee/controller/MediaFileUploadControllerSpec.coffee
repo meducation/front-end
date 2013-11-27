@@ -6,14 +6,21 @@ describe 'Media File Upload Controller', ->
 
   beforeEach ->
     module 'meducationFrontEnd'
-    inject ($rootScope, $controller) ->
+    inject ($rootScope, $controller, $compile) ->
       _$rootScope_ = $rootScope.$new()
       $scope = $rootScope.$new()
+      formMarkup = """
+        <form>
+          <input id='s3_key' type='hidden' value='uploads/image.jpg'/>
+        </form>
+      """
+      $element = $compile(formMarkup)(_$rootScope_)
 
       controller = $controller 'mediaFileUploadController',
         {
           $rootScope: _$rootScope_
           $scope: $scope
+          $element: $element
         }
 
   describe 'Initialisation', ->
@@ -21,7 +28,7 @@ describe 'Media File Upload Controller', ->
       expect(controller).not.toBeNull()
 
     it 'should set the correct options for the blueimp.fileupload plugin', ->
-      expect($scope.options).toEqual { dataType: 'xml', autoUpload: true }
+      expect($scope.options).toEqual { dataType: null, autoUpload: true }
 
     it 'should not have a progress width set', ->
       expect($scope.progressWidth).toBeUndefined()
@@ -30,15 +37,10 @@ describe 'Media File Upload Controller', ->
 
     beforeEach ->
       spyOn _$rootScope_, '$emit'
-      xml = """
-      <PostResponse>
-        <Location>http://my.external.server.com/uploads%2Fimage.jpg</Location>
-        <Bucket>my-bucket</Bucket>
-        <Key>uploads/image.jpg</Key>
-        <ETag>1709b592c7e504e467a5fc2c918ed477</ETag>
-      </PostResponse>
-      """
-      $scope.$emit 'fileuploaddone', { result: xml }
+      $scope.$emit 'fileuploaddone', {
+        url: 'http://my.external.server.com/'
+        files: [{ name: 'image.jpg'}]
+      }
 
     it 'should emit the external file URL on the root scope', ->
       externalFileUrl = 'http://my.external.server.com/uploads/image.jpg'
