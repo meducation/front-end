@@ -1,5 +1,10 @@
 mainModule = angular.module 'meducationFrontEnd'
 
+#
+# This controller configures and reacts to events from the jQuery File upload
+# angular plugin:
+# https://github.com/blueimp/jQuery-File-Upload/blob/master/js/jquery.fileupload-angular.js
+#
 mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
 
   $scope.statusOKDisplay = 'none'
@@ -12,6 +17,8 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
     autoUpload: true
   }
 
+  # These events are callback options from the jQuery File Upload plugin at
+  # https://github.com/blueimp/jQuery-File-Upload/wiki/Options#callback-options
   $scope.$on 'fileuploadprogressall', (event, data) ->
     $scope.progressWidth = parseInt data.loaded/data.total*100, 10
 
@@ -20,6 +27,9 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
     externalFileUrl = "#{data.url}#{$element.find('#s3_key').val()}"
       .replace '${filename}', $scope.fileName
 
+    # Publish the url via the event name (first argument) so that the
+    # MediaFileFormController can pick it up and set the hidden field:
+    # external_file_url
     $rootScope.$emit 'externalfileurlchange', externalFileUrl
 
     $scope.progressWidth = 0
