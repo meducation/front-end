@@ -25,6 +25,7 @@
     opacity: 0;
     -ms-filter: 'alpha(opacity=0)';
     cursor: pointer;
+    height: 100%;
 }
 
 #fe-file_upload_form .progress {
