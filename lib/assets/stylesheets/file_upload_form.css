@@ -12,6 +12,10 @@
     color: #59a80f;
 }
 
+#fe-file_upload_form .file_error {
+    color: #e84939;
+}
+
 #fe-file_upload_form .file_upload_button {
     position: relative;
     overflow: hidden;

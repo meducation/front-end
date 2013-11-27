@@ -33,7 +33,8 @@
                         <span>Select File to Upload</span>
                         <input id="file" type="file" name="file"/>
                     </span>
-                    <span class="upload_result" data-ng-show="fileName">Thank you! <span class="filename">{{fileName}}</span> has been uploaded for processing.</span>
+                    <span class="upload_result" data-ng-style="{display: statusOKDisplay}">Thank you! <span class="filename">{{fileName}}</span> has been uploaded for processing.</span>
+                    <span class="upload_result" data-ng-style="{display: statusFailDisplay}">Sorry, your file could not be uploaded because: <span class="file_error">{{fileError}}</span></span>
                 </div>
                 <div class="progress">
                     <div class="bar" data-ng-style="{width: progressWidth + '%'}"></div>

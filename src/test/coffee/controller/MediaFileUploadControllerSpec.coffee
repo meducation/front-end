@@ -33,6 +33,12 @@ describe 'Media File Upload Controller', ->
     it 'should not have a progress width set', ->
       expect($scope.progressWidth).toBeUndefined()
 
+    it 'should set the file upload OK status display property to none', ->
+      expect($scope.statusOKDisplay).toBe 'none'
+
+    it 'should set the file upload fail status display property to none', ->
+      expect($scope.statusFailDisplay).toBe 'none'
+
   describe 'On file Upload Done', ->
 
     beforeEach ->
@@ -54,8 +60,22 @@ describe 'Media File Upload Controller', ->
     it 'should set the file name', ->
       expect($scope.fileName).toBe 'image.jpg'
 
+    it 'should set the file upload OK status display property to inline', ->
+      expect($scope.statusOKDisplay).toBe 'inline'
+
   describe 'On file Upload Progress', ->
     it 'should set the progress bar width', ->
       $scope.$emit 'fileuploadprogressall', { loaded: 30, total: 90 }
 
       expect($scope.progressWidth).toBe 33
+
+  describe 'On File Upload Failure', ->
+
+    beforeEach ->
+      $scope.$emit 'fileuploadfail', { textStatus: 'parseerror' }
+
+    it 'should set the file upload fail status display property to inline', ->
+      expect($scope.statusFailDisplay).toBe 'inline'
+
+    it 'should set the upload error to be the reason behind the failure', ->
+      expect($scope.uploadError).toBe 'parseerror'

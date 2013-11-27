@@ -2,6 +2,9 @@ mainModule = angular.module 'meducationFrontEnd'
 
 mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
 
+  $scope.statusOKDisplay = 'none'
+  $scope.statusFailDisplay = 'none'
+
   $scope.options = {
     # Set to null to avoid parseerror messages for IE < 10 browsers.
     # We cannot get the XML response back from S3 via these browsers anyway :(
@@ -20,6 +23,11 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
     $rootScope.$emit 'externalfileurlchange', externalFileUrl
 
     $scope.progressWidth = 0
+    $scope.statusOKDisplay = 'inline'
+
+  $scope.$on 'fileuploadfail', (event, data) ->
+    $scope.uploadError = data.textStatus
+    $scope.statusFailDisplay = 'inline'
 
 mediaFileUploadControllerFunction.$inject = ['$rootScope', '$scope', '$element']
 mainModule.controller 'mediaFileUploadController',
