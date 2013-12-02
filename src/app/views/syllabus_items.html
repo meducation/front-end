@@ -4,6 +4,7 @@
     <title>SyllabusItems Controller</title>
     <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
     <link rel="stylesheet" href="lib/assets/stylesheets/meducation_front_end.css"/>
+    <link rel="stylesheet" href="lib/assets/stylesheets/syllabus_items_selector.css"/>
 </head>
 <body data-ng-app="meducationFrontEnd">
     <div data-ng-controller="syllabusItemsController" data-ng-init="init()">
@@ -28,10 +29,17 @@
         <input type="hidden" name="media_file[mesh_heading_ids]" value="{{meshHeadingIds}}"/>
     </div>
     <script src="/src/test/lib/jquery/jquery.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.fileupload.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.fileupload-process.js"></script>
 
     <script src="/src/test/lib/angular/angular.js"></script>
     <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
-    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
-    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
+
+    <script src="/vendor/assets/javascripts/jquery.fileupload-angular.js"></script>
+
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.js"></script>-->
+    <script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>
 </body>
 </html>

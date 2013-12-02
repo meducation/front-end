@@ -23,11 +23,16 @@ And then execute:
 
     $ bundle
 
-Place the following in `app/assets/javascripts.js`.
+Place the following in `app/assets/javascripts/application.js`.
 
-    //= require angular/angular
-    // ... add any other vendor scripts here ...
-    //= require meducation_front_end
+    //= require 'jquery.ui.widget'
+    //= require 'jquery.iframe-transport'
+    //= require 'jquery.fileupload'
+    //= require 'jquery.fileupload-process'
+    //= require 'angular'
+    //= require 'angular-resource'
+    //= require 'jquery.fileupload-angular'
+    //= require 'meducation_front_end'
 
 
 ## Contributing

@@ -24,14 +24,38 @@ If you've not contributed to a repository before - this is the accepted pattern 
 Presuming you have npm installed:
 
 ```
-npm install -g grunt-cli
+npm install -g grunt-cli bower
 npm install
 grunt
 bundle
 ```
 
-To run the JavasScript tests, use `grunt test`.
-To start a local server, use `grunt server`.
+### Testing
+
+To run the JavasScript tests, use `grunt test`.  This runs them via the terminal.  You can also open a HTML file to run them in a browser of your choice by serving `_SpecRunner.html`
+To start a local server, use `grunt server watch`.
+
+### Project Structure
+
+- The `lib` directory contains files to be packaged up to create a Rails gem.
+- The `vendor` directory is as above but used to include third party files required to make the gem function.
+- The `src/app` directory contains the express.js server code.
+- The `src/coffee` directory contains the CoffeeScript source files.
+- The `src/test` directory contains the Jasmine unit tests.  External dependencies required by the tests are downloaded to `src/test/lib` via [Bower](http://bower.io/).
+
+The following directories are generated during the development lifecycle:
+
+- `.grunt`: Where the Jasmine test helper files live.
+- `node_modules`: the home of the grunt project dependencies.
+- `tmp`: Where the compiled JavaScript is written to, as well as test coverage data.  A compiled HTML templates file is also written here.
+
+### Developing
+
+Run `grunt --help` to see a list of available tasks and their explanations
+
+The `server watch` tasks run a local express.js server hosting pages with example front end components.
+When any of the source or test code changes, the default task is run and the express server is restarted so that changes are reflected upon browser refresh.
+You can automate browser refresh on change by installing a [LiveReload](http://livereload.com/) browser plugin.
 
 Thank you again!
 :heart: :sparkling_heart: :heart:

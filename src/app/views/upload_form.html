@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Upload Form</title>
+    <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.3.0/pure-min.css"/>
+    <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.1/css/font-awesome.css" rel="stylesheet">
+    <link rel="stylesheet" href="lib/assets/stylesheets/meducation_front_end.css"/>
+    <link rel="stylesheet" href="lib/assets/stylesheets/file_upload_form.css"/>
+    <link rel="stylesheet" href="lib/assets/stylesheets/syllabus_items_selector.css"/>
+</head>
+<body data-ng-app="meducationFrontEnd">
+    <form data-ng-controller="mediaFileUploadController" data-file-upload="options"
+          action="/s3_upload" id="fe-file_upload_form" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data" id="fe-file_upload_form">
+        <fieldset>
+            <legend>Contribute to Meducation</legend>
+            <p>Contribute to our community and build your reputation by uploading a resource to Meducation.</p>
+            <div class="pure-control-group">
+                <label for="file">
+                    <h2>Select your File</h2>
+                    <p>You can upload videos, podcasts, PowerPoints, PDFs, documents or any other media that you have created.</p>
+                    <p>Once a file has been selected it will be automatically uploaded to our servers to begin processing.</p>
+                    <p>If your resource is a large file, it might take a while to upload and process.</p>
+                </label>
+                <input id="s3_key" type="hidden" name="key" value="uploads/${filename}" />
+                <input type="hidden" name="AWSAccessKeyId" value="MYACCESSKEY"/>
+                <input type="hidden" name="acl" value="private"/>
+                <input type="hidden" name="policy" value="MYPOLICY"/>
+                <input type="hidden" name="signature" value="MYSIGNATURE"/>
+                <input type="hidden" name="success_action_status" value="201"/>
+                <div class="upload_section">
+                    <span class="pure-button action file_upload_button">
+                        <li class="fa fa-cloud-upload"></li>
+                        <span>Select File to Upload</span>
+                        <input id="file" type="file" name="file"/>
+                    </span>
+                    <span class="upload_result" data-ng-style="{display: statusOKDisplay}">Thank you! <span class="filename">{{fileName}}</span> has been uploaded for processing.</span>
+                    <span class="upload_result" data-ng-style="{display: statusFailDisplay}">Sorry, your file could not be uploaded because: <span class="file_error">{{fileError}}</span></span>
+                </div>
+                <div class="progress">
+                    <div class="bar" data-ng-style="{width: progressWidth + '%'}"></div>
+                </div>
+            </div>
+        </fieldset>
+    </form>
+    <form class="pure-form pure-form-stacked" data-ng-controller="mediaFileFormController"
+          accept-charset="UTF-8" action="/media_files" enctype="multipart/form-data" id="new_media_file" method="post">
+        <input type="hidden" name="media_file[original_file_url]" id="media_file_original_file_url" value="{{ originalFileUrl }}"/>
+        <fieldset>
+            <div class="pure-control-group">
+                <label for="media_file_title">
+                    <h2>Title</h2>
+                </label>
+                <input id="media_file_title" name="media_file[title]" type="text" placeholder="Resource title" required />
+            </div>
+            <div class="pure-control-group">
+                <label for="media_file_description">
+                    <h2>Description</h2>
+                </label>
+                <div class="markdown_textarea">
+                    <textarea id="media_file_description" name="media_file[description]" placeholder="Please describe your resource here" cols="130" rows="20" class="markdown"></textarea>
+                </div>
+            </div>
+            <div id="fe-syllabus_items_selector" class="pure-control-group" data-ng-controller="syllabusItemsController" data-ng-init="init()">
+                <label for="media_file_mesh_heading_ids">
+                    <h2>Categorise</h2>
+                    <p>Select topics that are relevant to this resource.</p>
+                </label>
+                <select data-ng-model="selected0" data-ng-change="updateMeshHeadingIds()" data-ng-options="item.name for item in items">
+                    <option value="">Select Topic</option>
+                </select>
+                <select data-ng-show="showSelect(selected0)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected1" data-ng-options="child.name for child in selected0.children">
+                    <option value="">Select Topic</option>
+                </select>
+                <select data-ng-show="showSelect(selected1)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected2" data-ng-options="child.name for child in selected1.children">
+                    <option value="">Select Topic</option>
+                </select>
+                <select data-ng-show="showSelect(selected2)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected3" data-ng-options="child.name for child in selected2.children">
+                    <option value="">Select Topic</option>
+                </select>
+                <select data-ng-show="showSelect(selected3)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected4" data-ng-options="child.name for child in selected3.children">
+                    <option value="">Select Topic</option>
+                </select>
+                <select data-ng-show="showSelect(selected4)" data-ng-change="updateMeshHeadingIds()" data-ng-model="selected5" data-ng-options="child.name for child in selected4.children">
+                    <option value="">Select Topic</option>
+                </select>
+                <input type="hidden" id="media_file_mesh_heading_ids" name="media_file[mesh_heading_ids]" value="{{meshHeadingIds}}"/>
+            </div>
+            <div class="pure-controls">
+                <label for="media_file_availability_id" class="pure-checkbox">
+                    <input id="media_file_availability_id" name="media_file[availability_id]" type="checkbox"> Restrict this file to only groups you select. NOT recommended
+                </label>
+                <button id="upload_submit" name="commit" type="submit" class="pure-button pure-button-primary" data-ng-disabled="isFormSubmissionDisabled">
+                    Upload your Resource
+                    <li class="fa fa-arrow-right"></li>
+                </button>
+            </div>
+        </fieldset>
+    </form>
+
+    <script src="/src/test/lib/jquery/jquery.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/vendor/jquery.ui.widget.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.iframe-transport.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.fileupload.js"></script>
+    <script src="/src/test/lib/blueimp-file-upload/js/jquery.fileupload-process.js"></script>
+
+    <script src="/src/test/lib/angular/angular.js"></script>
+    <script src="/src/test/lib/angular-resource/angular-resource.js"></script>
+
+    <script src="/vendor/assets/javascripts/jquery.fileupload-angular.js"></script>
+
+    <script src="/lib/assets/javascripts/meducation_front_end.js"></script>
+    <!--<script src="/lib/assets/javascripts/meducation_front_end.min.js"></script>-->
+</body>
+</html>
