@@ -11,7 +11,7 @@ describe 'Media File Upload Controller', ->
       $scope = $rootScope.$new()
       formMarkup = """
         <form>
-          <input id='s3_key' type='hidden' value='uploads/image.jpg'/>
+          <input id='s3_key' type='hidden' value='uploads/${filename}'/>
         </form>
       """
       $element = $compile(formMarkup)(_$rootScope_)
@@ -49,7 +49,7 @@ describe 'Media File Upload Controller', ->
       }
 
     it 'should emit the original file URL on the root scope', ->
-      originalFileUrl = 'http://my.original.server.com/uploads/image.jpg'
+      originalFileUrl = 'http://my.original.server.com/uploads/original.jpg'
 
       expect(_$rootScope_.$emit)
         .toHaveBeenCalledWith 'originalfileurlchange', originalFileUrl
@@ -58,7 +58,7 @@ describe 'Media File Upload Controller', ->
       expect($scope.progressWidth).toBe 0
 
     it 'should set the file name', ->
-      expect($scope.fileName).toBe 'image.jpg'
+      expect($scope.fileName).toBe 'original.jpg'
 
     it 'should set the file upload OK status display property to inline', ->
       expect($scope.statusOKDisplay).toBe 'inline'

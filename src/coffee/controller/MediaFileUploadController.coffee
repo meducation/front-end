@@ -23,7 +23,9 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
     $scope.progressWidth = parseInt data.loaded/data.total*100, 10
 
   $scope.$on 'fileuploaddone', (event, data) ->
-    $scope.fileName = data.files[0].name
+    nameParts = data.files[0].name.split(".")
+    ext = nameParts[nameParts.length - 1]
+    $scope.fileName = "original.#{ext}"
     originalFileUrl = "#{data.url}#{$element.find('#s3_key').val()}"
       .replace '${filename}', $scope.fileName
 
