@@ -44,7 +44,7 @@
     </form>
     <form class="pure-form pure-form-stacked" data-ng-controller="mediaFileFormController"
           accept-charset="UTF-8" action="/media_files" enctype="multipart/form-data" id="new_media_file" method="post">
-        <input type="hidden" name="media_file[external_file_url]" id="media_file_external_file_url" value="{{ externalFileUrl }}"/>
+        <input type="hidden" name="media_file[original_file_url]" id="media_file_original_file_url" value="{{ originalFileUrl }}"/>
         <fieldset>
             <div class="pure-control-group">
                 <label for="media_file_title">

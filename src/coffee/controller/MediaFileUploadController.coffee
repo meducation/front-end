@@ -24,13 +24,13 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
 
   $scope.$on 'fileuploaddone', (event, data) ->
     $scope.fileName = data.files[0].name
-    externalFileUrl = "#{data.url}#{$element.find('#s3_key').val()}"
+    originalFileUrl = "#{data.url}#{$element.find('#s3_key').val()}"
       .replace '${filename}', $scope.fileName
 
     # Publish the url via the event name (first argument) so that the
     # MediaFileFormController can pick it up and set the hidden field:
-    # external_file_url
-    $rootScope.$emit 'externalfileurlchange', externalFileUrl
+    # original_file_url
+    $rootScope.$emit 'originalfileurlchange', originalFileUrl
 
     $scope.progressWidth = 0
     $scope.statusOKDisplay = 'inline'

@@ -44,15 +44,15 @@ describe 'Media File Upload Controller', ->
     beforeEach ->
       spyOn _$rootScope_, '$emit'
       $scope.$emit 'fileuploaddone', {
-        url: 'http://my.external.server.com/'
+        url: 'http://my.original.server.com/'
         files: [{ name: 'image.jpg'}]
       }
 
-    it 'should emit the external file URL on the root scope', ->
-      externalFileUrl = 'http://my.external.server.com/uploads/image.jpg'
+    it 'should emit the original file URL on the root scope', ->
+      originalFileUrl = 'http://my.original.server.com/uploads/image.jpg'
 
       expect(_$rootScope_.$emit)
-        .toHaveBeenCalledWith 'externalfileurlchange', externalFileUrl
+        .toHaveBeenCalledWith 'originalfileurlchange', originalFileUrl
 
     it 'should set the progress bar width to 0', ->
       expect($scope.progressWidth).toBe 0

@@ -23,14 +23,14 @@ describe 'Media File Form Controller', ->
     it 'should set the form submit button to be disabled', ->
       expect($scope.isFormSubmissionDisabled).toBeTruthy()
 
-  describe 'On External File URL Change', ->
-    extnernalFileUrl = 'http://my.external.server.com/uploads/image.jpg'
+  describe 'On Original File URL Change', ->
+    extnernalFileUrl = 'http://my.original.server.com/uploads/image.jpg'
 
     beforeEach ->
-      _$rootScope_.$emit 'externalfileurlchange', extnernalFileUrl
+      _$rootScope_.$emit 'originalfileurlchange', extnernalFileUrl
 
-    it 'should set the local externalFileURL scope variable', ->
-      expect($scope.externalFileUrl).toBe extnernalFileUrl
+    it 'should set the local originalFileURL scope variable', ->
+      expect($scope.originalFileUrl).toBe extnernalFileUrl
 
     it 'should enable form submission', ->
       expect($scope.isFormSubmissionDisabled).toBeFalsy()

@@ -4,9 +4,9 @@ mediaFileFormControllerFunction = ($rootScope, $scope) ->
 
   $scope.isFormSubmissionDisabled = true
 
-  # Receive the external file URL from the MediaFileUploadController
-  unbind = $rootScope.$on 'externalfileurlchange', (event, url) ->
-    $scope.externalFileUrl = url
+  # Receive the original file URL from the MediaFileUploadController
+  unbind = $rootScope.$on 'originalfileurlchange', (event, url) ->
+    $scope.originalFileUrl = url
     $scope.isFormSubmissionDisabled = false
 
   # Prevent memory leaks, see: http://stackoverflow.com/a/19498009/2820224
