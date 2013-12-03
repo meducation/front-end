@@ -22,7 +22,20 @@ mediaFileUploadControllerFunction = ($rootScope, $scope, $element) ->
   $scope.$on 'fileuploadprogressall', (event, data) ->
     $scope.progressWidth = parseInt data.loaded/data.total*100, 10
 
+  $scope.$on 'fileuploadadd', (event, data) ->
+    nameParts = data.files[0].name.split(".")
+    ext = nameParts[nameParts.length - 1]
+    filename = "original.#{ext}"
+    $scope.s3_key = "#{$element.data('url-root')}#{filename}"
+    $scope.fileName = filename
+    originalFileUrl = filename
+
   $scope.$on 'fileuploaddone', (event, data) ->
+
+    # Everything below should now be able to be replaced with this
+    # but the tests fail so I need @pads to sort it.
+    #$rootScope.$emit 'originalfileurlchange', $scope.s3_key
+
     nameParts = data.files[0].name.split(".")
     ext = nameParts[nameParts.length - 1]
     $scope.fileName = "original.#{ext}"
