@@ -9,8 +9,8 @@
     <link rel="stylesheet" href="lib/assets/stylesheets/syllabus_items_selector.css"/>
 </head>
 <body data-ng-app="meducationFrontEnd">
-    <form data-ng-controller="mediaFileUploadController" data-file-upload="options"
-          action="/s3_upload" id="fe-file_upload_form" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data" id="fe-file_upload_form">
+    <form data-ng-controller="mediaFileUploadController" data-file-upload="options" data-url-root="uploads/"
+          action="/s3_upload" id="fe-file_upload_form" class="pure-form pure-form-stacked" method="post" enctype="multipart/form-data">
         <fieldset>
             <legend>Contribute to Meducation</legend>
             <p>Contribute to our community and build your reputation by uploading a resource to Meducation.</p>
@@ -21,7 +21,7 @@
                     <p>Once a file has been selected it will be automatically uploaded to our servers to begin processing.</p>
                     <p>If your resource is a large file, it might take a while to upload and process.</p>
                 </label>
-                <input id="s3_key" type="hidden" name="key" value="uploads/${filename}" />
+                <input id="s3_key" type="hidden" name="key" />
                 <input type="hidden" name="AWSAccessKeyId" value="MYACCESSKEY"/>
                 <input type="hidden" name="acl" value="private"/>
                 <input type="hidden" name="policy" value="MYPOLICY"/>

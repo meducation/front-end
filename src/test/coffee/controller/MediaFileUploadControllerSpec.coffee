@@ -10,8 +10,8 @@ describe 'Media File Upload Controller', ->
       _$rootScope_ = $rootScope.$new()
       $scope = $rootScope.$new()
       formMarkup = """
-        <form>
-          <input id='s3_key' type='hidden' value='uploads/${filename}'/>
+        <form data-url-root='uploads/'>
+          <input id='s3_key' type='hidden' />
         </form>
       """
       $element = $compile(formMarkup)(_$rootScope_)
@@ -39,26 +39,35 @@ describe 'Media File Upload Controller', ->
     it 'should set the file upload fail status display property to none', ->
       expect($scope.statusFailDisplay).toBe 'none'
 
-  describe 'On file Upload Done', ->
+  describe 'On File Added', ->
 
     beforeEach ->
-      spyOn _$rootScope_, '$emit'
-      $scope.$emit 'fileuploaddone', {
-        url: 'http://my.original.server.com/'
+      $scope.$emit 'fileuploadadd', {
         files: [{ name: 'image.jpg'}]
       }
 
+    it 'should set the correct S3 key', ->
+      expect($scope.s3Key)
+        .toBe 'uploads/original.jpg'
+
+    it 'should set the correct file name', ->
+      expect($scope.fileName).toBe 'original.jpg'
+
+  describe 'On File Upload Done', ->
+
+    beforeEach ->
+      spyOn _$rootScope_, '$emit'
+      $scope.s3Key = 'uploads/original.jpg'
+      $scope.$emit 'fileuploaddone'
+
     it 'should emit the original file URL on the root scope', ->
-      originalFileUrl = 'http://my.original.server.com/uploads/original.jpg'
+      originalFileUrl = 'uploads/original.jpg'
 
       expect(_$rootScope_.$emit)
         .toHaveBeenCalledWith 'originalfileurlchange', originalFileUrl
 
     it 'should set the progress bar width to 0', ->
       expect($scope.progressWidth).toBe 0
-
-    it 'should set the file name', ->
-      expect($scope.fileName).toBe 'original.jpg'
 
     it 'should set the file upload OK status display property to inline', ->
       expect($scope.statusOKDisplay).toBe 'inline'

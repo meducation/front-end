@@ -57,6 +57,10 @@ The `server watch` tasks run a local express.js server hosting pages with exampl
 When any of the source or test code changes, the default task is run and the express server is restarted so that changes are reflected upon browser refresh.
 You can automate browser refresh on change by installing a [LiveReload](http://livereload.com/) browser plugin.
 
+#### Versioning
+
+Please remember to up the version at `lib/meducation_front_end/version.rb` after making changes.
+
 Thank you again!
 :heart: :sparkling_heart: :heart:
 
