@@ -47,7 +47,7 @@ describe 'Media File Upload Controller', ->
       }
 
     it 'should set the correct S3 key', ->
-      expect($scope.s3Key)
+      expect($scope.s3_key)
         .toBe 'uploads/original.jpg'
 
     it 'should set the correct file name', ->
@@ -57,7 +57,7 @@ describe 'Media File Upload Controller', ->
 
     beforeEach ->
       spyOn _$rootScope_, '$emit'
-      $scope.s3Key = 'uploads/original.jpg'
+      $scope.s3_key = 'uploads/original.jpg'
       $scope.$emit 'fileuploaddone'
 
     it 'should emit the original file URL on the root scope', ->
