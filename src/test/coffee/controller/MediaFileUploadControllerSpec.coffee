@@ -58,10 +58,12 @@ describe 'Media File Upload Controller', ->
     beforeEach ->
       spyOn _$rootScope_, '$emit'
       $scope.s3_key = 'uploads/original.jpg'
-      $scope.$emit 'fileuploaddone'
+      $scope.$emit 'fileuploaddone', {
+        url: 'http://my.original.server.com/'
+      }
 
     it 'should emit the original file URL on the root scope', ->
-      originalFileUrl = 'uploads/original.jpg'
+      originalFileUrl = 'http://my.original.server.com/uploads/original.jpg'
 
       expect(_$rootScope_.$emit)
         .toHaveBeenCalledWith 'originalfileurlchange', originalFileUrl
