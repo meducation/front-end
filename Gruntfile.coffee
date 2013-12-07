@@ -108,6 +108,12 @@ module.exports = (grunt) ->
           'lib/assets/javascripts/meducation_front_end.min.js':
             ['lib/assets/javascripts/meducation_front_end.js']
 
+    csslint:
+      options:
+        csslintrc: '.csslintrc'
+      lint:
+        src: ['lib/assets/stylesheets/**/*.css']
+
     jasmine:
       test:
         src: srcFiles
@@ -220,5 +226,5 @@ module.exports = (grunt) ->
     ['connect', 'test', 'saucelabs-jasmine']
 
   grunt.registerTask 'default', 'Run for first time setup.',
-    ['clean', 'bowerful', 'coffeelint', 'test-with-coverage',
+    ['clean', 'bowerful', 'csslint', 'coffeelint', 'test-with-coverage',
      'coffee:production', 'uglify']

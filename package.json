@@ -17,10 +17,11 @@
     "grunt-html2js": "~0.1.8",
     "grunt-contrib-uglify": "~0.2.4",
     "grunt-saucelabs": "~4.1.2",
-    "grunt-contrib-connect": "~0.5.0"
+    "grunt-contrib-connect": "~0.5.0",
+    "grunt-contrib-csslint": "~0.2.0"
   },
   "scripts": {
-    "test": "grunt coffeelint compile saucelabs jasmine:coverage"
+    "test": "grunt csslint coffeelint compile saucelabs jasmine:coverage"
   },
   "dependencies": {
     "ejs": "~0.8.4"
