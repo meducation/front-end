@@ -14,7 +14,7 @@ medVoterFunction = ($compile, $templateCache) ->
     template
 
   loadTemplateFromCacheAndCompile = (element, template, scope) ->
-    element.html $templateCache.get(template)
+    element.html $templateCache.get template
     $compile(element.contents())(scope)
 
   determineNegativeClass = (scope, rating) ->
@@ -36,6 +36,8 @@ medVoterFunction = ($compile, $templateCache) ->
     type: '@medVoterType'
     rating: '=medVoterRating'
     liked: '=medVoterLiked'
+    facebookConnected: '@medVoterFacebookConnected'
+    facebookAutoLike: '=medVoterFacebookAutoLike'
 
   link: (scope, element) ->
     defaultTemplate = '/assets/pageVote.html'
@@ -43,34 +45,17 @@ medVoterFunction = ($compile, $templateCache) ->
     loadTemplateFromCacheAndCompile element, template, scope
     setRating scope
     setVotedState scope
-    determineNegativeClass(scope, scope.rating)
+    determineNegativeClass scope, scope.rating
 
   controller: ['$scope', '$element', 'votesService',
     ($scope, $element, votesService) ->
       ratingValue = $scope.rating
 
-      # TODO: Move to a template
-      overlay = (itemID, itemType, voteID) ->
-        """
-  <div style="padding:8px;">
-    <h3 style="margin-top:0px">Like this on Facebook too.</h3>
-    <form accept-charset="UTF-8" action="/my/votes/#{voteID}/publish_to_facebook"
-      data-remote="true" id="publish_to_facebook_item_vote_path_form"
-      method="post">
-      <div style="margin:0;padding:0;display:inline">
-        <input name="utf8" type="hidden" value="&#x2713;"/>
-        <input name="_method" type="hidden" value="put"/>
-        <input name="authenticity_token" type="hidden"
-          value="ywBPFkQ1SLISxEOWOl1cELZCR5dFjk9OYAO3+FWrVuU="/>
-      </div>
-      <p>Why not share this with your friends on Facebook as well?</p>
-      <a href="/auth/facebook" class="btn facebook_connect_btn"
-        data-redirect-url="#{location.protocol}//#{location.host}/my/votes?item%5Bid%5D=#{itemID}&item%5Btype%5D=#{itemType}&liked=1">Connect To Facebook</a>
-      <a class="no_thanks" href="#" style="line-height: 32px;
-        vertical-align: middle;margin-left:8px;font-size:12px">No Thanks »</a>
-    </form>
-  </div>
-          """
+      overlay = (voteID) ->
+        $facebookPrompt = $element.find '#fe-facebook_prompt'
+        $facebookPrompt.find('form').attr 'action',
+          "/my/votes/#{voteID}/publish_to_facebook"
+        $facebookPrompt.html()
 
       # TODO: Move to directive
       animateVoteButton = (direction) ->
@@ -78,8 +63,8 @@ medVoterFunction = ($compile, $templateCache) ->
         Meducation.UI.wiggle thumbImage
 
       # TODO: Move to controller
-      showFacebookOverlay = (itemID, itemType, voteID) ->
-        Meducation.showAlert overlay(itemID, itemType, voteID), 20000
+      showFacebookOverlay = (voteID) ->
+        Meducation.showAlert overlay(voteID), 20000
         $('#publish_to_facebook_item_vote_path_form .no_thanks').click ->
           $('.overlay.modal.alert').fadeOut()
           false
@@ -110,7 +95,9 @@ medVoterFunction = ($compile, $templateCache) ->
             if $scope.votedDown then ratingValue +=2 else ratingValue += 1
             $scope.votedUp = true
             $scope.votedDown = false
-            showFacebookOverlay($scope.id, $scope.type, data.vote.id) unless $scope.type is 'Item::Comment'
+
+            if $scope.type isnt 'Item::Comment' and not $scope.facebookAutoLike
+              showFacebookOverlay(data.vote.id)
 
           setRatingText()
           determineNegativeClass($scope, ratingValue)

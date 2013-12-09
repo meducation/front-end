@@ -40,6 +40,13 @@ describe 'Votes Directive', ->
                                    data-med-voter-rating="1"
                                    data-med-voter-liked="true"/>'''
 
+  facebookAutoLikeDirectiveMarkup = '''<div data-med-voter
+                                   data-med-voter-id="1"
+                                   data-med-voter-type="KnowledgeBank::Answer"
+                                   data-med-voter-rating="1"
+                                   data-med-voter-facebook-connected="true"
+                                   data-med-voter-facebook-auto-like="true"/>'''
+
   setupDOM = (directiveMarkup) ->
     element = compile(directiveMarkup)(rootScope)
     rootScope.$digest()
@@ -244,13 +251,36 @@ describe 'Votes Directive', ->
 
       it 'should pass in the item ID and type into the redirect URL', ->
         overlayTemplate = window.Meducation.showAlert.mostRecentCall.args[0]
-        redirect = '/my/votes?item%5Bid%5D=1&item%5Btype%5D=MediaFile&liked=1'
+        redirect = '/my/votes?item%5Bid%5D=1&amp;item%5Btype%5D=MediaFile&amp;liked=1'
         expect(overlayTemplate).toContain redirect
 
       it 'should pass in the vote ID to the form action', ->
         overlayTemplate = window.Meducation.showAlert.mostRecentCall.args[0]
         formAction = 'action="/my/votes/2/publish_to_facebook"'
         expect(overlayTemplate).toContain formAction
+
+  describe 'Facebook Auto Like', ->
+
+    beforeEach ->
+      directiveScope = setupDOM facebookAutoLikeDirectiveMarkup
+
+      promise.error = ->
+      promise.success = (callback) ->
+        vote =
+          "vote":
+            "id": 2
+        callback(vote)
+
+      spyOn(promise, 'success').andCallThrough()
+      stubbedServicePost.returns promise
+
+      directiveScope.upVote()
+
+    afterEach ->
+      stubbedServicePost.restore()
+
+    it 'should not show the share to Facebook overlay', ->
+      expect(window.Meducation.showAlert).not.toHaveBeenCalled()
 
   describe 'Down-voting', ->
 
