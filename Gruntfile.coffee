@@ -67,6 +67,9 @@ module.exports = (grunt) ->
       templates:
         files: ['lib/assets/templates/**/*.html']
         tasks: ['default']
+      sass:
+        files: ['src/scss/**/*.scss']
+        tasks: ['default']
 
     clean:
       files: [
@@ -101,6 +104,11 @@ module.exports = (grunt) ->
         src: ['**/*.coffee']
         dest: 'tmp/test/js'
         ext: '.js'
+
+    sass:
+      dist:
+        files:
+          'lib/assets/stylesheets/meducation_front_end.css': 'src/scss/meducation_front_end.scss'
 
     uglify:
       production:
@@ -227,4 +235,4 @@ module.exports = (grunt) ->
 
   grunt.registerTask 'default', 'Run for first time setup.',
     ['clean', 'bowerful', 'csslint', 'coffeelint', 'test-with-coverage',
-     'coffee:production', 'uglify']
+     'sass', 'coffee:production', 'uglify']

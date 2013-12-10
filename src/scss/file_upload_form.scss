@@ -1,27 +1,28 @@
-#fe-file_upload_form label {
+#fe-file_upload_form {
+  label {
     color: #000000;
     width: 100%;
     float: none;
-}
+  }
 
-#fe-file_upload_form .upload_section span {
+  .upload_section span {
     vertical-align: middle;
-}
+  }
 
-#fe-file_upload_form .filename {
+  .filename {
     color: #59a80f;
-}
+  }
 
-#fe-file_upload_form .file_error {
+  .file_error {
     color: #e84939;
-}
+  }
 
-#fe-file_upload_form .file_upload_button {
+  .file_upload_button {
     position: relative;
     overflow: hidden;
-}
+  }
 
-#fe-file_upload_form input {
+  input {
     position: absolute;
     top: 0;
     right: 0;
@@ -30,14 +31,15 @@
     -ms-filter: 'alpha(opacity=0)';
     cursor: pointer;
     height: 100%;
-}
+  }
 
-#fe-file_upload_form .progress {
+  .progress {
     margin-top: 10px;
-}
+  }
 
-#fe-file_upload_form .bar {
+  #fe-file_upload_form .bar {
     width: 0;
     height: 20px;
     background: #59a80f;
+  }
 }

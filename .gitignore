@@ -7,6 +7,7 @@ tmp
 src/test/lib
 bower.json
 *.min.js
+.sass-cache
 
 Gemfile.lock
 

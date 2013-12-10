@@ -23,7 +23,11 @@ And then execute:
 
     $ bundle
 
-Place the following in `app/assets/javascripts/application.js`.
+## Including in Rails
+
+### JavaScript
+
+Place the following in `app/assets/javascripts/application.js`:
 
     //= require 'jquery.ui.widget'
     //= require 'jquery.iframe-transport'
@@ -34,6 +38,11 @@ Place the following in `app/assets/javascripts/application.js`.
     //= require 'jquery.fileupload-angular'
     //= require 'meducation_front_end'
 
+### CSS
+
+Place the following in `app/assets/javascripts/application.css.scss`:
+
+    @import "meducation_front_end";
 
 ## Contributing
 
