@@ -1,0 +1,51 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Jasmine Spec Runner</title>
+    <% css.forEach(function(style){ %>
+    <link rel="stylesheet" type="text/css" href="<%= style %>">
+    <% }) %>
+    <% with (scripts) { %>
+    <% [].concat(polyfills, jasmine, vendor, helpers, src, specs, reporters).forEach(function(script){ %>
+    <script src="<%= script %>"></script>
+    <% }) %>
+    <script>
+        /*global jasmine:false, window:false, document:false*/
+
+        (function(){
+            'use strict';
+
+            var jasmineEnv = jasmine.getEnv();
+
+            jasmineEnv.updateInterval = 1000;
+            var htmlReporter = new jasmine.HtmlReporter();
+            jasmineEnv.addReporter(htmlReporter);
+
+            jasmineEnv.addReporter(new jasmine.JSReporter());
+
+            jasmineEnv.specFilter = function(spec) {
+                return htmlReporter.specFilter(spec);
+            };
+
+            var currentWindowOnload = window.onload;
+
+            if (document.readyState !== 'complete') {
+                window.onload = function() {
+                    if (currentWindowOnload) {
+                        currentWindowOnload();
+                    }
+                    jasmineEnv.execute();
+                };
+            } else {
+                jasmineEnv.execute();
+            }
+
+
+        }());
+    </script>
+    <% }; %>
+</head>
+<body>
+</body>
+</html>

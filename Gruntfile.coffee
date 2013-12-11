@@ -11,6 +11,7 @@ module.exports = (grunt) ->
     'tmp/js/*.js'
   ]
   helperFiles = [
+    'src/test/lib/jasmine-jsreporter/jasmine-jsreporter.js'
     'src/test/lib/sinonjs/sinon.js'
     'src/test/lib/angular-mocks/angular-mocks.js'
   ]
@@ -30,6 +31,7 @@ module.exports = (grunt) ->
           'sinonjs': ''
           'angular-mocks': '1.2.0'
           'angular-resource': '1.2.0'
+          'detro/jasmine-jsreporter': ''
         store: 'src/test/lib'
 
     express:
@@ -130,6 +132,7 @@ module.exports = (grunt) ->
           helpers: helperFiles
           vendor: vendorFiles
           keepRunner: true
+          template: 'src/test/CustomSpecRunner.tmpl'
       coverage:
         src: srcFiles
         options:
