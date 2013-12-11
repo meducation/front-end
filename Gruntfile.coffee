@@ -5,6 +5,7 @@ module.exports = (grunt) ->
   ciBuildNo = if env.TRAVIS_BUILD_NUMBER then env.TRAVIS_BUILD_NUMBER else '-1'
   ciBranch = if env.TRAVIS_BRANCH then env.TRAVIS_BRANCH else 'local'
 
+  serverFiles = 'src/server/**/*.coffee'
   srcFiles = [
     'tmp/js/MeducationTemplates.js'
     'tmp/js/MeducationFrontEnd.js'
@@ -38,7 +39,7 @@ module.exports = (grunt) ->
       dev:
         options:
           cmd: 'coffee'
-          script: 'src/app/server.coffee'
+          script: 'src/server/server.coffee'
           port: 5000
 
     coffeelint:
@@ -46,7 +47,7 @@ module.exports = (grunt) ->
         max_line_length:
           'level': 'ignore'
       files: [
-        'src/app/**/*.coffee'
+        serverFiles
         'src/coffee/**/*.coffee'
         'src/test/coffee/**/*.coffee'
       ]
@@ -58,7 +59,7 @@ module.exports = (grunt) ->
         nospawn: true
       coffee:
         files: [
-          'src/app/**/*.coffee'
+          serverFiles
           'src/coffee/**/*.coffee'
           'src/test/coffee/**/*.coffee'
         ]
@@ -222,7 +223,7 @@ module.exports = (grunt) ->
 
   require('matchdep').filterDev('grunt-!(template)*').forEach grunt.loadNpmTasks
 
-  grunt.registerTask 'server', 'Start a web server to host the app.',
+  grunt.registerTask 'server', 'Start a web server to host an example app.',
     ['express:dev', 'watch']
 
   grunt.registerTask 'compile', 'Compile CoffeeScript and template files',

@@ -39,7 +39,7 @@ To start a local server, use `grunt server watch`.
 
 - The `lib` directory contains files to be packaged up to create a Rails gem.
 - The `vendor` directory is as above but used to include third party files required to make the gem function.
-- The `src/app` directory contains the express.js server code.
+- The `src/server` directory contains the express.js server code.
 - The `src/coffee` directory contains the CoffeeScript source files.
 - The `src/test` directory contains the Jasmine unit tests.  External dependencies required by the tests are downloaded to `src/test/lib` via [Bower](http://bower.io/).
 
