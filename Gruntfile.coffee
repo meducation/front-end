@@ -164,6 +164,7 @@ module.exports = (grunt) ->
           build: ciJobId
           tags: [ciBuildNo, ciBranch]
           testTimeout: 60000
+          tunnelTimeout: 60000
           detailedError: true
           browsers: [{
             browserName: 'internet explorer',
