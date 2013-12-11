@@ -1,0 +1,37 @@
+.votes {
+  font-family: 'museo-sans';
+
+  button {
+    text-align: center;
+    border-radius: 0;
+    i {
+      padding: 0;
+    }
+  }
+
+  .fa-thumbs-up,
+  .fa-thumbs-down {
+    color: #808183;
+    &:hover {
+      color: #3d3f41;
+    }
+  }
+
+  .fa-thumbs-down {
+    vertical-align: text-top;
+  }
+
+  .selected .fa-thumbs-up,
+  .rating {
+    color: #59a80f;
+  }
+
+  .selected .fa-thumbs-down,
+  .negative {
+    color: red;
+  }
+
+  .rating {
+    text-align: center;
+  }
+}

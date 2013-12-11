@@ -30,3 +30,27 @@
 #fe-syllabus_items_selector select {
   display: inline-block;
   margin-right: 10px; }
+
+.votes {
+  font-family: 'museo-sans'; }
+  .votes button {
+    text-align: center;
+    border-radius: 0; }
+    .votes button i {
+      padding: 0; }
+  .votes .fa-thumbs-up,
+  .votes .fa-thumbs-down {
+    color: #808183; }
+    .votes .fa-thumbs-up:hover,
+    .votes .fa-thumbs-down:hover {
+      color: #3d3f41; }
+  .votes .fa-thumbs-down {
+    vertical-align: text-top; }
+  .votes .selected .fa-thumbs-up,
+  .votes .rating {
+    color: #59a80f; }
+  .votes .selected .fa-thumbs-down,
+  .votes .negative {
+    color: red; }
+  .votes .rating {
+    text-align: center; }
