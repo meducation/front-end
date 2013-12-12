@@ -1,0 +1,24 @@
+@mixin border-radius($radius) {
+  -webkit-border-radius: $radius;
+  -moz-border-radius: $radius;
+  -ms-border-radius: $radius;
+  border-radius: $radius;
+}
+
+@mixin font-size($size: 1.6, $line_height: null) {
+  font-size: ($size * 10) + px;
+  font-size: $size + rem;
+  @if $line_height == null {
+    $line_height: 1.4 * $size;
+  }
+  line-height: ($line_height * 10) + px;
+  line-height: $line_height + rem;
+}
+
+@mixin link-color($color, $hover_color: null) {
+  @if $hover_color == null { $hover_color: $color }
+
+  color: $color;
+  &:visited { color: $color; }
+  &:hover { color:$hover_color; }
+}

@@ -54,3 +54,82 @@
     color: red; }
   .votes .rating {
     text-align: center; }
+
+.content_widget:hover .img {
+  border-color: #4f9dff;
+  box-shadow: 0 0 5px #4f9dff; }
+.content_widget .img {
+  background-size: cover;
+  background-color: #fff;
+  width: 159px;
+  min-height: 100px;
+  position: relative;
+  -webkit-transition: all 0.20s ease-in-out;
+  -moz-transition: all 0.20s ease-in-out;
+  -ms-transition: all 0.20s ease-in-out;
+  -o-transition: all 0.20s ease-in-out; }
+  .content_widget .img:before {
+    -webkit-box-shadow: inset 0 0 20px 1px rgba(0, 0, 0, 0.1);
+    -moz-box-shadow: inset 0 0 20px 1px rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 0 20px 1px rgba(0, 0, 0, 0.1);
+    border: 5px solid #fff;
+    content: '';
+    width: 100%;
+    height: 100%;
+    position: absolute; }
+.content_widget > a {
+  text-decoration: none;
+  color: #808183; }
+  .content_widget > a:visited {
+    color: #808183; }
+  .content_widget > a:hover {
+    color: #808183; }
+.content_widget > div {
+  color: #808183; }
+  .content_widget > div:visited {
+    color: #808183; }
+  .content_widget > div:hover {
+    color: #808183; }
+.content_widget .title {
+  font-weight: 700;
+  font-size: 14px;
+  font-size: 1.4rem;
+  line-height: 19.6px;
+  line-height: 1.96rem;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  overflow: inherit; }
+.content_widget .byline {
+  font-size: 12px;
+  font-size: 1.2rem;
+  line-height: 16.8px;
+  line-height: 1.68rem; }
+.content_widget.kb_question {
+  border: none; }
+.content_widget.mf {
+  background: none; }
+.content_widget.blog_post {
+  background: #fff; }
+.content_widget.premium_tutorial {
+  background: #e0eeb3;
+  border: 1px solid #94bc03;
+  position: relative; }
+  .content_widget.premium_tutorial .premium_ribbon {
+    z-index: 1;
+    background: #94bc03;
+    color: #fff;
+    text-align: center;
+    padding: 1px 11px;
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -ms-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+    position: absolute;
+    right: -16px;
+    top: 6px;
+    border-radius: 5px;
+    font-size: 10px;
+    font-size: 1rem;
+    line-height: 14px;
+    line-height: 1.4rem; }
