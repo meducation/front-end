@@ -1,0 +1,17 @@
+<aside class=" content_widget {{ parsedItem.type }}" data-ng-switch on="interactive">
+    <div class="premium_ribbon">Premium</div>
+    <a class="pure-g-r" href="{{ parsedItem.url }}" title="{{ parsedItem.title }}" data-ng-switch-when="true">
+        <div class="pure-u-1-3 img" style="background-image:url('{{ parsedItem.img }}')"></div>
+        <div class="pure-u-2-3 pad-left-small">
+            <h5 class="title">{{ parsedItem.title }}</h5>
+            <div class="byline">{{ parsedItem.author }}</div>
+        </div>
+    </a>
+    <div class="pure-g-r" href="{{ parsedItem.url }}" title="{{ parsedItem.title }}" data-ng-switch-default>
+        <div class="pure-u-1-3 img" style="background-image:url('{{ parsedItem.img }}')"></div>
+        <div class="pure-u-2-3 pad-left-small">
+            <h5 class="title">{{ parsedItem.title }}</h5>
+            <div class="byline">{{ parsedItem.author }}</div>
+        </div>
+    </div>
+</aside>

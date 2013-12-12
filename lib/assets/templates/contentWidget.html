@@ -1,0 +1,12 @@
+<aside class="{{ parsedItem.class }} content_widget {{ parsedItem.type }}" data-ng-switch on="interactive">
+    <a href="{{ parsedItem.url }}" title="{{ parsedItem.title }}" data-ng-switch-when="true">
+        <div class="img" style="background-image:url('{{ parsedItem.img }}')"></div>
+        <h5 class="title">{{ parsedItem.title.substring(0, 89) }}</h5>
+        <div class="byline">{{ parsedItem.author }}</div>
+    </a>
+    <div title="{{ parsedItem.title }}" data-ng-switch-default>
+        <div class="img" style="background-image:url('{{ parsedItem.img }}')"></div>
+        <h5 class="title">{{ parsedItem.title.substring(0, 89) }}</h5>
+        <div class="byline">{{ parsedItem.author }}</div>
+    </div>
+</aside>

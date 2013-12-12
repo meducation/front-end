@@ -4,6 +4,7 @@ http = require 'http'
 votes = require './routes/votes'
 syllabusItems = require './routes/syllabus_items'
 uploadForm = require './routes/upload_form'
+contentWidgets = require './routes/content_widgets'
 server = express()
 
 server.set 'port', process.env.PORT || 5000
@@ -31,6 +32,7 @@ server.get '/', (request, response) ->
 server.get "/votes", votes.getVote
 server.get "/syllabus_items", syllabusItems.getSyllabusItems
 server.get "/upload_form", uploadForm.getUploadForm
+server.get "/content_widgets", contentWidgets.getContentWidgets
 
 # API calls returning stubbed responses.
 uriPrefix = '/api'

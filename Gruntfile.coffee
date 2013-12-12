@@ -239,5 +239,5 @@ module.exports = (grunt) ->
     ['connect', 'test', 'saucelabs-jasmine']
 
   grunt.registerTask 'default', 'Run for first time setup.',
-    ['clean', 'bowerful', 'csslint', 'coffeelint', 'test-with-coverage',
-     'sass', 'coffee:production', 'uglify']
+    ['clean', 'bowerful', 'coffeelint', 'test-with-coverage',
+     'sass', 'csslint', 'coffee:production', 'uglify']
