@@ -22,7 +22,7 @@
     "grunt-contrib-sass": "~0.5.1"
   },
   "scripts": {
-    "test": "grunt sass csslint coffeelint compile saucelabs jasmine:coverage"
+    "test": "grunt sass csslint coffeelint compile jasmine:test jasmine:coverage"
   },
   "dependencies": {
     "ejs": "~0.8.4"
